@@ -1,0 +1,31 @@
+---
+const rows = [
+  { label: 'Ders yükü',         classic: 'Herkese aynı ders saatleri',      knt: 'Sadece ihtiyacın kadar (FOCUS)' },
+  { label: 'Kişiselleştirme',   classic: 'Yok — grup programı sabittir',    knt: 'Bireysel koçlukla sürekli ayar' },
+  { label: 'Deneme yayını',     classic: 'Kurumun seçtiği tek yayın',       knt: 'Öğrenci kendi yayınını seçer' },
+  { label: 'Çalışma ortamı',    classic: 'Ders saatleri dışında yok',       knt: 'Kütüphane & çalışma alanı dahil' },
+  { label: 'Süreç takibi',      classic: 'Karne ve sınav ortalaması',       knt: 'Koçlukla haftalık yol haritası' },
+  { label: 'Öğrenci profili',   classic: 'Tek tip',                         knt: '3 farklı program yolu' },
+];
+---
+
+<div class="overflow-x-auto rounded-2xl border border-border">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-border bg-surface">
+        <th class="text-left py-4 px-6 font-semibold text-ink w-1/3">Konu</th>
+        <th class="text-left py-4 px-6 font-semibold text-muted">Klasik Dershane</th>
+        <th class="text-left py-4 px-6 font-semibold text-accent">KNT Akademi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={`border-b border-border last:border-b-0 ${i % 2 === 0 ? 'bg-white' : 'bg-surface'}`}>
+          <td class="py-4 px-6 font-medium text-ink">{row.label}</td>
+          <td class="py-4 px-6 text-muted">{row.classic}</td>
+          <td class="py-4 px-6 text-ink font-medium">{row.knt}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

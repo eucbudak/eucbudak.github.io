@@ -1,0 +1,165 @@
+---
+import { wa } from '../lib/whatsapp';
+const waUrl = wa('general');
+---
+
+<header id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200">
+  <div class="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between h-40">
+
+    <!-- Logo (büyük) -->
+    <a href="/" aria-label="KNT Akademi Ana Sayfa" class="shrink-0">
+      <img src="/logo.png" alt="KNT Akademi" class="h-36 w-auto block"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <span style="display:none" class="font-black text-2xl tracking-tight text-accent">KNT AKADEMİ</span>
+    </a>
+
+    <!-- Desktop links -->
+    <nav class="hidden xl:flex items-center gap-5" aria-label="Ana menü">
+
+      <a href="/q-deneme" class="neon-cta">Q Deneme</a>
+
+      <!-- Eğitim Çözümlerimiz dropdown -->
+      <div class="relative group">
+        <button class="flex items-center gap-1 text-sm font-medium text-muted hover:text-ink transition-colors duration-150 py-1" aria-haspopup="true">
+          Eğitim Çözümlerimiz
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-150 group-hover:rotate-180">
+            <polyline points="6,9 12,15 18,9"/>
+          </svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-white rounded-2xl border border-border shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150 translate-y-1 group-hover:translate-y-0 overflow-hidden">
+          <div class="p-2 flex flex-col gap-1">
+            <a href="/paketler/q-vip" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
+              <span class="text-lg" aria-hidden="true">⭐</span>
+              <div>
+                <p class="text-sm font-semibold text-ink">Q VIP</p>
+                <p class="text-xs text-muted">Full paket başarı sistemi</p>
+              </div>
+            </a>
+            <a href="/paketler/ozel-ders-basari-kulubu" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
+              <span class="text-lg" aria-hidden="true">🎯</span>
+              <div>
+                <p class="text-sm font-semibold text-ink">Özel Ders Başarı Kulübü</p>
+                <p class="text-xs text-muted">Birebir + sistem, sınıf yok</p>
+              </div>
+            </a>
+            <a href="/paketler/calisanlar-kulubu" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
+              <span class="text-lg" aria-hidden="true">📖</span>
+              <div>
+                <p class="text-sm font-semibold text-ink">Çalışanlar Kulübü</p>
+                <p class="text-xs text-muted">Kendi hızında, sistem senin</p>
+              </div>
+            </a>
+            <a href="/yaklasim" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
+              <span class="text-lg" aria-hidden="true">🔍</span>
+              <div>
+                <p class="text-sm font-semibold text-ink">FOCUS Modeli</p>
+                <p class="text-xs text-muted">Sadece ihtiyacın kadar ders</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="/q-work"      class="text-sm font-medium text-muted hover:text-ink transition-colors duration-150">Q Work</a>
+      <a href="/subelerimiz" class="text-sm font-medium text-muted hover:text-ink transition-colors duration-150">Şubelerimiz</a>
+      <a href="/iletisim"    class="text-sm font-medium text-muted hover:text-ink transition-colors duration-150">İletişim</a>
+    </nav>
+
+    <!-- Desktop sağ grup: WhatsApp + Q Deneme neon -->
+    <div class="hidden xl:flex items-center gap-3 shrink-0">
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-150"
+      >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      WhatsApp
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button id="nav-toggle" class="xl:hidden p-2 -mr-2 text-ink" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <svg id="icon-ham" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg id="icon-x" class="hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-border">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-1">
+
+      <!-- Eğitim Çözümlerimiz accordion -->
+      <button id="mobile-solutions-btn" class="flex items-center justify-between w-full text-sm font-medium text-ink py-3 border-b border-border" aria-expanded="false">
+        Eğitim Çözümlerimiz
+        <svg id="mobile-solutions-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-150">
+          <polyline points="6,9 12,15 18,9"/>
+        </svg>
+      </button>
+      <div id="mobile-solutions-panel" class="hidden flex-col gap-1 pl-4 pb-2 border-b border-border">
+        <a href="/paketler/q-vip"                    class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">⭐ Q VIP</a>
+        <a href="/paketler/ozel-ders-basari-kulubu"  class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">🎯 Özel Ders Başarı Kulübü</a>
+        <a href="/paketler/calisanlar-kulubu"        class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">📖 Çalışanlar Kulübü</a>
+        <a href="/yaklasim"                          class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">🔍 FOCUS Modeli</a>
+      </div>
+
+      <a href="/q-work"      class="text-sm font-medium text-ink py-3 border-b border-border">Q Work</a>
+      <a href="/subelerimiz" class="text-sm font-medium text-ink py-3 border-b border-border">Şubelerimiz</a>
+      <a href="/q-deneme"    class="neon-cta my-2 inline-block text-center w-full text-center">Q Deneme</a>
+      <a href="/yaklasim"    class="text-sm font-medium text-ink py-3 border-b border-border">FOCUS Modeli</a>
+      <a href="/iletisim"    class="text-sm font-medium text-ink py-3 border-b border-border">İletişim</a>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer"
+        class="mt-3 flex items-center justify-center gap-2 bg-accent text-white text-sm font-semibold px-5 py-3 rounded-full">
+        WhatsApp'tan Başvur
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav   = document.getElementById('site-nav')!;
+  const btn   = document.getElementById('nav-toggle')!;
+  const menu  = document.getElementById('mobile-menu')!;
+  const ham   = document.getElementById('icon-ham')!;
+  const xIcon = document.getElementById('icon-x')!;
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 16;
+    nav.classList.toggle('bg-white/95',      scrolled);
+    nav.classList.toggle('backdrop-blur-md', scrolled);
+    nav.classList.toggle('shadow-sm',        scrolled);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!open));
+    ham.classList.toggle('hidden', !open);
+    xIcon.classList.toggle('hidden', open);
+  });
+
+  const solBtn   = document.getElementById('mobile-solutions-btn')!;
+  const solPanel = document.getElementById('mobile-solutions-panel')!;
+  const solIcon  = document.getElementById('mobile-solutions-icon')!;
+
+  solBtn.addEventListener('click', () => {
+    const open = solPanel.classList.toggle('hidden');
+    solBtn.setAttribute('aria-expanded', String(!open));
+    solIcon.classList.toggle('rotate-180', !open);
+    solPanel.classList.toggle('flex', !open);
+  });
+
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      ham.classList.remove('hidden');
+      xIcon.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

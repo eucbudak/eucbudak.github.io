@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTABand from '../../components/CTABand.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { packages } from '../../data/packages';
+
+const pkg = packages.find(p => p.id === 'q-vip')!;
+---
+
+<Base
+  title="Q VIP — KNT Akademi"
+  description="Sınıf dersi, özel ders, koçluk, deneme ve kütüphane bir arada. KNT Akademi'nin en kapsamlı programı."
+>
+  <article class="pt-32 pb-24">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+
+      <!-- Header -->
+      <div class="max-w-2xl mb-20">
+        <a href="/#paketler" class="text-xs text-muted hover:text-ink transition-colors mb-6 inline-flex items-center gap-1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg>
+          Tüm Paketler
+        </a>
+        {pkg.badge && (
+          <span class="inline-block bg-accent-soft text-accent text-xs font-bold px-3 py-1 rounded-full mb-4">{pkg.badge}</span>
+        )}
+        <h1 class="text-5xl md:text-6xl font-black text-ink mb-4" style="letter-spacing:-0.03em">{pkg.name}</h1>
+        <p class="text-xl font-medium text-muted mb-2">{pkg.tagline}</p>
+        <p class="text-base text-muted leading-relaxed">{pkg.forWho}</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-16">
+        <!-- What's included -->
+        <div>
+          <p class="text-xs font-bold tracking-widest text-muted uppercase mb-6">Pakete Dahil</p>
+          <ul class="flex flex-col gap-5">
+            {pkg.features.map(f => (
+              <li class="flex items-start gap-4 pb-5 border-b border-border last:border-0">
+                <svg class="w-5 h-5 mt-0.5 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2,8 6,12 14,4"/>
+                </svg>
+                <span class="text-ink font-medium">{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Details -->
+        <div class="flex flex-col gap-8">
+          <div class="bg-surface rounded-2xl border border-border p-8">
+            <p class="text-xs font-bold tracking-widest text-muted uppercase mb-4">Bu Paket Kimin İçin?</p>
+            <ul class="flex flex-col gap-3">
+              {[
+                'Toplu ders anlatımından verim alan',
+                'Hem sınıf hem birebir destek isteyen',
+                'Tam paket sistemle çalışmak isteyen',
+                'Koçluk ve takiple motive olan',
+              ].map(item => (
+                <li class="flex items-start gap-3 text-sm text-ink">
+                  <span class="text-accent font-bold shrink-0">→</span>{item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="bg-accent/5 border border-accent/20 rounded-2xl p-6">
+            <p class="text-sm font-medium text-ink mb-1">Bu paket senin için değil, eğer...</p>
+            <p class="text-sm text-muted">{pkg.notFor}</p>
+          </div>
+
+          <WhatsAppButton ctx="q-vip" label="Q VIP Hakkında Bilgi Al" class="text-base px-8 py-3.5 w-full justify-center" />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CTABand
+    title="Q VIP sana uygun mu?"
+    sub="Birlikte konuşalım, emin olalım."
+    ctx="q-vip"
+    label="WhatsApp'tan Sor"
+  />
+</Base>

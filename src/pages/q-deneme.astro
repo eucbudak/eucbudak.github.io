@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import CTABand from '../components/CTABand.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+---
+
+<Base
+  title="Q Deneme — KNT Akademi"
+  description="Q Deneme Kulübü: Yayın seçimi serbest, analiz odaklı deneme sistemi. Türkiye'de ilk kez öğrenci kendi yayınını seçiyor."
+>
+  <section class="pt-32 pb-24">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="max-w-2xl mb-16">
+        <a href="/" class="text-xs text-muted hover:text-ink transition-colors mb-6 inline-flex items-center gap-1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg>
+          Ana Sayfa
+        </a>
+        <span class="text-xs font-bold tracking-widest text-accent uppercase mb-6 block">Eğitim Çözümlerimiz</span>
+        <h1 class="text-5xl md:text-6xl font-black text-ink mb-4" style="letter-spacing:-0.03em">Q Deneme</h1>
+        <p class="text-xl font-medium text-muted mb-4">Yayın seçimi serbest deneme sistemi</p>
+        <p class="text-base text-muted leading-relaxed">
+          Türkiye'de klasik modelin tam tersi. Sana hangi yayını çözeceğini dikte etmiyoruz — sana en uygun yayını birlikte seçiyor, analizini birlikte yapıyoruz.
+        </p>
+      </div>
+
+      <!-- Big claim -->
+      <div class="bg-ink rounded-2xl p-10 md:p-14 mb-12 text-center">
+        <p class="text-xs font-bold tracking-widest text-accent uppercase mb-4">Türkiye'de İlk Kez</p>
+        <h2 class="text-3xl md:text-5xl font-black text-white leading-tight mb-4" style="letter-spacing:-0.03em">
+          Deneme yayınını<br />sen seçiyorsun.
+        </h2>
+        <p class="text-white/50 text-base max-w-md mx-auto">
+          Binlerce öğrencinin çözdüğü aynı yayında kaybolma. Sana uygun tempoda, sana uygun yayınla ilerle.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-16">
+        {[
+          { icon: '🔍', title: 'Yayın Eşleştirme',  desc: 'Sana en uygun yayını birlikte belirleriz. Tempo, soru stili ve zorluk seviyesi dikkate alınır.' },
+          { icon: '📈', title: 'Detaylı Analiz',    desc: 'Her denemeden sonra konu-bazlı analiz. Nerede zayıf, nerede güçlü olduğun net görünür.' },
+          { icon: '🧭', title: 'Koçluk Entegrasyonu', desc: 'Deneme sonuçları doğrudan koçluk sürecine girer. Bir sonraki adım hemen belirlenir.' },
+        ].map(item => (
+          <div class="bg-surface rounded-2xl border border-border p-8 flex flex-col gap-4">
+            <span class="text-3xl" aria-hidden="true">{item.icon}</span>
+            <h3 class="font-bold text-ink">{item.title}</h3>
+            <p class="text-sm text-muted leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="bg-accent/5 border border-accent/20 rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div>
+          <p class="font-bold text-ink text-lg mb-1">Q Deneme Kulübü'ne katıl</p>
+          <p class="text-sm text-muted">Tüm paketlerde deneme sistemi dahildir. Detaylar için bize ulaş.</p>
+        </div>
+        <WhatsAppButton ctx="focus" label="Bilgi Al" variant="primary" class="shrink-0" />
+      </div>
+    </div>
+  </section>
+
+  <CTABand
+    title="Ölçtüğünü yönetirsin."
+    sub="Q Deneme Kulübü hakkında daha fazla bilgi almak için WhatsApp'tan yaz."
+    ctx="focus"
+    label="WhatsApp'tan Sor"
+  />
+</Base>

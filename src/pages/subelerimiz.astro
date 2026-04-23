@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import CTABand from '../components/CTABand.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const branches = [
+  {
+    name:    'Efeler Lise',
+    city:    'Aydın / Efeler',
+    address: 'Mimar Sinan Mahallesi 2427 Sokak No:30 Efeler Aydın',
+    phone:   '0532 131 44 09',
+    img:     '/kurum.jpg',
+  },
+  {
+    name:    'Nazilli Lise',
+    city:    'Aydın / Nazilli',
+    address: 'Zafer Mahallesi 959 Sokak No:11 Nazilli Aydın',
+    phone:   '0532 131 44 09',
+    img:     '/nazilli-lise.jpeg',
+  },
+  {
+    name:    'Nazilli Ortaokul',
+    city:    'Aydın / Nazilli',
+    address: 'Zafer Mahallesi 959 Sokak No:11 Nazilli Aydın',
+    phone:   '0532 131 44 09',
+    img:     '/nazilli-ortaokul.jpeg',
+  },
+];
+---
+
+<Base
+  title="Şubelerimiz — KNT Akademi"
+  description="KNT Akademi şubeleri ve iletişim bilgileri."
+>
+  <section class="pt-32 pb-24">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+
+      <div class="max-w-xl mb-16">
+        <span class="text-xs font-bold tracking-widest text-accent uppercase mb-6 block">Şubelerimiz</span>
+        <h1 class="text-5xl md:text-6xl font-black text-ink mb-4" style="letter-spacing:-0.03em">
+          Sana yakın<br />bir şubemiz var.
+        </h1>
+        <p class="text-base text-muted leading-relaxed">
+          KNT Akademi şubelerini keşfet. Hangi şubede çalışmak istediğini WhatsApp'tan bize ilet.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {branches.map(branch => (
+          <article class="group rounded-3xl border border-border overflow-hidden bg-white hover:shadow-lg transition-shadow duration-200">
+            <div class="aspect-[16/9] overflow-hidden bg-surface">
+              <img
+                src={branch.img}
+                alt={branch.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-8">
+              <span class="text-xs font-bold tracking-widest text-accent uppercase mb-2 block">{branch.city}</span>
+              <h2 class="text-xl font-bold text-ink mb-3">{branch.name}</h2>
+              <p class="text-sm text-muted mb-1">{branch.address}</p>
+              <p class="text-sm text-muted mb-6">{branch.phone}</p>
+              <WhatsAppButton ctx="iletisim" label="Bilgi Al" variant="ghost" class="text-sm px-5 py-2.5" />
+            </div>
+          </article>
+        ))}
+
+      </div>
+
+    </div>
+  </section>
+
+  <CTABand
+    title="En yakın şubede görüşelim."
+    sub="Hangi şubede çalışmak istediğini söyle, seni yönlendirelim."
+    label="WhatsApp'tan Sor"
+  />
+</Base>

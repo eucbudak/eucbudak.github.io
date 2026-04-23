@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+---
+
+<Base
+  title="İletişim — KNT Akademi"
+  description="KNT Akademi ile WhatsApp üzerinden iletişime geç. Sana en uygun programı birlikte belirleyelim."
+>
+  <section class="pt-32 pb-24">
+    <div class="max-w-3xl mx-auto px-6 md:px-8">
+      <span class="text-xs font-bold tracking-widest text-accent uppercase mb-6 block">İletişim</span>
+      <h1 class="text-5xl md:text-6xl font-black text-ink leading-tight mb-6" style="letter-spacing:-0.03em">
+        Konuşalım.
+      </h1>
+      <p class="text-lg text-muted leading-relaxed mb-12">
+        Sana en uygun programı seçmek için bir WhatsApp mesajı yeterli.
+        Formsuz, bekleme listeleri olmadan — doğrudan konuşuyoruz.
+      </p>
+
+      <div class="flex flex-col gap-6">
+        <!-- WhatsApp CTA (main) -->
+        <div class="bg-ink rounded-2xl p-8 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <p class="font-bold text-lg mb-1">WhatsApp ile başvur</p>
+            <p class="text-white/50 text-sm">0532 131 44 09 — hızlı yanıt</p>
+          </div>
+          <WhatsAppButton ctx="iletisim" label="Mesaj Gönder" class="shrink-0" />
+        </div>
+
+        <!-- Info cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-surface rounded-2xl border border-border p-6">
+            <p class="text-xs font-bold tracking-widest text-muted uppercase mb-3">Programlar</p>
+            <ul class="flex flex-col gap-2">
+              <li><a href="/paketler/q-vip" class="text-sm font-medium text-ink hover:text-accent transition-colors">→ Q VIP</a></li>
+              <li><a href="/paketler/ozel-ders-basari-kulubu" class="text-sm font-medium text-ink hover:text-accent transition-colors">→ Özel Ders Başarı Kulübü</a></li>
+              <li><a href="/paketler/calisanlar-kulubu" class="text-sm font-medium text-ink hover:text-accent transition-colors">→ Çalışanlar Kulübü</a></li>
+            </ul>
+          </div>
+          <div class="bg-surface rounded-2xl border border-border p-6">
+            <p class="text-xs font-bold tracking-widest text-muted uppercase mb-3">Yaklaşımımız</p>
+            <p class="text-sm text-muted leading-relaxed mb-3">FOCUS modeli, bireysel koçluk ve Q Deneme Kulübü hakkında daha fazla bilgi almak istiyorsan:</p>
+            <a href="/yaklasim" class="text-sm font-semibold text-accent hover:text-accent-hover transition-colors">FOCUS Modelini Öğren →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

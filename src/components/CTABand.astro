@@ -1,0 +1,31 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+import { type WaContext } from '../lib/whatsapp';
+
+export interface Props {
+  title?: string;
+  sub?:   string;
+  ctx?:   WaContext;
+  label?: string;
+}
+
+const {
+  title = 'Hangi sistem sana uygun?',
+  sub   = 'WhatsApp\'tan bize ulaş, birlikte karar verelim.',
+  ctx   = 'general',
+  label = 'WhatsApp\'tan Başvur',
+} = Astro.props;
+---
+
+<section class="bg-ink py-20 md:py-28">
+  <div class="max-w-6xl mx-auto px-6 md:px-8 flex flex-col items-center text-center gap-6">
+    <h2
+      class="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight"
+      style="letter-spacing:-0.03em"
+    >
+      {title}
+    </h2>
+    <p class="text-base md:text-lg text-white/50 max-w-md">{sub}</p>
+    <WhatsAppButton ctx={ctx} label={label} class="mt-2 text-base px-8 py-4" />
+  </div>
+</section>

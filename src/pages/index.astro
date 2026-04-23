@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PackageCard from '../components/PackageCard.astro';
+import FeatureTriple from '../components/FeatureTriple.astro';
+import CTABand from '../components/CTABand.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { packages } from '../data/packages';
+import { wa } from '../lib/whatsapp';
+
+const engineItems = [
+  {
+    icon:  '🧠',
+    title: 'Bireysel Koçluk',
+    desc:  'AI destekli ve insan koçluğunun birleşimi. Her haftanın sonunda nerede olduğunu ve ne yapman gerektiğini biliyorsun.',
+  },
+  {
+    icon:  '📚',
+    title: 'Kütüphane & Çalışma Alanı',
+    desc:  'Verimli çalışma alışkanlığı kuran bir ortam. Ders saatlerinin ötesinde, istediğin zaman çalışma alanın hazır.',
+  },
+  {
+    icon:  '📊',
+    title: 'Deneme Sistemi',
+    desc:  'Ölçtüğünü yönetirsin. Hangi yayını seçtiğinden bağımsız, her deneme sonucu koçluk sürecine giriyor.',
+  },
+];
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="min-h-screen flex items-center pt-28 overflow-hidden relative">
+    <!-- Sağ taraf fotoğraf (desktop) -->
+    <div class="hidden md:block absolute inset-y-0 right-0 w-[52%]">
+      <img
+        src="/kurum.jpg"
+        alt="KNT Akademi binası"
+        class="w-full h-full object-cover object-center"
+      />
+      <!-- Sola doğru transparan geçiş -->
+      <div class="absolute inset-y-0 left-0 w-2/3"
+        style="background: linear-gradient(to right, #ffffff 0%, #ffffff 30%, rgba(255,255,255,0.85) 60%, transparent 100%)">
+      </div>
+    </div>
+
+    <!-- İçerik (sol) -->
+    <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-8 w-full pb-24">
+      <div class="max-w-xl">
+        <span class="inline-block text-xs font-bold tracking-widest text-accent uppercase mb-6">
+          Kişiselleştirilmiş YKS Hazırlık
+        </span>
+        <h1
+          class="text-5xl md:text-7xl font-black text-ink leading-none mb-6"
+          style="letter-spacing:-0.03em"
+        >
+          Eğitimde&nbsp;Terzi<br />İşi&nbsp;Çözümler.
+        </h1>
+        <p class="text-lg md:text-xl text-muted leading-relaxed mb-10">
+          KNT Akademi'de sınıf anlatımı, özel ders ya da tam bağımsız çalışma — hangisi sana uyarsa.
+          Üçü de koçluk, deneme ve kütüphane desteğiyle geliyor.
+        </p>
+        <div class="flex flex-col sm:flex-row items-start gap-4">
+          <WhatsAppButton ctx="general" label="WhatsApp'tan Bilgi Al" class="text-base px-7 py-3.5" />
+          <a
+            href="#paketler"
+            class="inline-flex items-center gap-2 text-base font-semibold text-ink hover:text-accent transition-colors duration-150 py-3.5"
+          >
+            Paketleri Gör
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobil: fotoğraf altta -->
+    <div class="md:hidden absolute bottom-0 left-0 right-0 h-56 -z-0 opacity-20">
+      <img src="/kurum.jpg" alt="" class="w-full h-full object-cover object-top" aria-hidden="true" />
+      <div class="absolute inset-0" style="background: linear-gradient(to bottom, #ffffff 0%, transparent 100%)"></div>
+    </div>
+  </section>
+
+
+  <!-- VALUE STRIP -->
+  <section class="bg-surface border-y border-border py-12">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+        {[
+          { icon: '⏱', label: 'Zaman Optimizasyonu', desc: 'Gereksiz ders yok — sadece ihtiyacın kadar' },
+          { icon: '🎯', label: 'Tam Kişiselleştirme', desc: 'Koçlukla bireysel yol haritası' },
+          { icon: '🔑', label: 'Kontrol Senin',       desc: 'Deneme yayınını sen seçiyorsun' },
+        ].map(item => (
+          <div class="flex items-start gap-4 px-8 py-6 first:pl-0 last:pr-0">
+            <span class="text-2xl mt-0.5" aria-hidden="true">{item.icon}</span>
+            <div>
+              <p class="font-bold text-ink text-sm">{item.label}</p>
+              <p class="text-xs text-muted mt-0.5">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="paketler" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="reveal mb-14">
+        <SectionHeader
+          eyebrow="Programlar"
+          title="İhtiyacına göre bir yol seç"
+          sub="Toplu eğitimden tam bağımsız çalışmaya — üç farklı program yolu var. Hangisi sana uyarsa oradan başlarsın."
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {packages.map((pkg, i) => (
+          <div class="reveal" style={`transition-delay:${i * 80}ms`}>
+            <PackageCard pkg={pkg} featured={pkg.id === 'q-vip'} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGINE -->
+  <section class="bg-surface py-24 md:py-32 border-y border-border">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="reveal mb-14">
+        <SectionHeader
+          eyebrow="Fark Yaratan Motor"
+          title="Üründen daha değerli olan üç şey"
+          sub="Her pakette ortak olan bu üç unsur, başarının asıl motoru. Sadece içerik değil — sistem."
+        />
+      </div>
+      <div class="reveal" style="transition-delay:100ms">
+        <FeatureTriple items={engineItems} />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOCUS TEASER + Q DENEMESİ -->
+  <section class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+          <span class="text-xs font-bold tracking-widest text-accent uppercase mb-4 block">FOCUS Modeli</span>
+          <h2 class="text-3xl md:text-4xl font-black text-ink leading-tight mb-6" style="letter-spacing:-0.02em">
+            Dershane saatlerini neden harcıyorsun?
+          </h2>
+          <p class="text-muted leading-relaxed mb-4">
+            Klasik modelde herkese aynı ders, aynı tempo, aynı yayın. Güçlü olduğun konular için de zayıf olduğun konular için de aynı vakit.
+          </p>
+          <p class="text-muted leading-relaxed mb-8">
+            FOCUS modelinde sadece ihtiyacın kadar ders alırsın. Gerçekten eksik olduğun yerlere odaklanırsın.
+          </p>
+          <a
+            href="/yaklasim"
+            class="inline-flex items-center gap-2 font-semibold text-accent hover:text-accent-hover transition-colors"
+          >
+            FOCUS modelini öğren
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="reveal" style="transition-delay:100ms">
+          <div class="bg-ink rounded-2xl p-10 text-white">
+            <span class="text-xs font-bold tracking-widest text-accent uppercase mb-4 block">Q Deneme Kulübü</span>
+            <h3 class="text-2xl font-bold mb-4 leading-tight" style="letter-spacing:-0.02em">
+              Türkiye'de ilk kez: Deneme yayınını sen seçiyorsun.
+            </h3>
+            <p class="text-white/60 text-sm leading-relaxed mb-6">
+              Sana uygun yayını sen belirlersin. Biz sadece süreçle ilgileniriz — analiz, koçluk ve yönlendirme.
+            </p>
+            <div class="flex items-center gap-4">
+              <a href="/q-deneme" class="neon-cta">Q Deneme</a>
+              <a
+                href={wa('focus')}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-sm font-semibold text-white/50 hover:text-white transition-colors"
+              >
+                Nasıl çalışıyor?
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <CTABand
+    title="Hangi sistem sana uygun?"
+    sub="WhatsApp'tan bize ulaş, birlikte karar verelim."
+    label="WhatsApp'tan Başvur"
+  />
+</Base>

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(cp -r C:/claude/kntakademi/shaky-star/. C:/claude/kntakademi/)",
+      "Bash(rm -rf C:/claude/kntakademi/shaky-star)",
+      "Bash(npm install *)",
+      "Bash(npx astro *)",
+      "Bash(npm run *)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}
