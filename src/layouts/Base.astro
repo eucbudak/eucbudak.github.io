@@ -12,6 +12,57 @@ const {
   title = 'KNT Akademi — Kişiselleştirilmiş YKS Hazırlık',
   description = 'Zaman optimizasyonu, bireysel koçluk ve esnek deneme sistemiyle YKS\'ye hazırlan. Sınıf, özel ders veya tam bağımsız çalışma — seçim senin.',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'KNT Akademi',
+  url: 'https://kntakademi.com',
+  logo: 'https://kntakademi.com/logo.png',
+  description: 'Kişiselleştirilmiş YKS hazırlık sistemi. Zaman optimizasyonu, bireysel koçluk ve esnek deneme.',
+  telephone: '+90 532 131 44 09',
+  areaServed: 'TR',
+  location: [
+    {
+      '@type': 'Place',
+      name: 'KNT Akademi Efeler',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Mimar Sinan Mahallesi 2427 Sokak No:30',
+        addressLocality: 'Efeler',
+        addressRegion: 'Aydın',
+        addressCountry: 'TR',
+      },
+      telephone: '+90 532 131 44 09',
+    },
+    {
+      '@type': 'Place',
+      name: 'KNT Akademi Nazilli Lise',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Zafer Mahallesi 959 Sokak No:11',
+        addressLocality: 'Nazilli',
+        addressRegion: 'Aydın',
+        addressCountry: 'TR',
+      },
+      telephone: '+90 544 141 09 09',
+    },
+    {
+      '@type': 'Place',
+      name: 'KNT Akademi Nazilli Ortaokul',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Zafer Mahallesi 959 Sokak No:11',
+        addressLocality: 'Nazilli',
+        addressRegion: 'Aydın',
+        addressCountry: 'TR',
+      },
+      telephone: '+90 544 141 09 09',
+    },
+  ],
+};
 ---
 
 <!DOCTYPE html>
@@ -21,13 +72,21 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content="KNT Akademi" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
   <body class="bg-white">
     <Nav />
