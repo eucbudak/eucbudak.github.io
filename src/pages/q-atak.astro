@@ -26,10 +26,10 @@ const sinavRozet: Record<Sinav, string> = {
 // Ders renk paleti (program tablosunda küçük etiket için)
 const dersRenk: Record<string, string> = {
   'Matematik': 'text-[#FF6B1A]',
-  'Geometri':  'text-violet-500',
   'Fizik':     'text-sky-500',
   'Kimya':     'text-emerald-500',
   'Biyoloji':  'text-rose-500',
+  'Türkçe':    'text-violet-500',
 };
 
 // Ders ikonları (master liste başlığında)
@@ -140,7 +140,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
           <div class="grid grid-cols-2 gap-4">
             {[
               { num: '10',                    label: 'Gün',          desc: '11–22 Mayıs · 2 hafta' },
-              { num: '5',                     label: 'Ders',         desc: 'MAT · GEO · FİZ · KİM · BİY' },
+              { num: '4+1',                   label: 'Ders',         desc: 'MAT · FİZ · KİM · BİY · TÜR' },
               { num: String(toplamKonu),      label: 'Kritik konu',  desc: `${aytKonu} AYT · ${tytKonu} TYT` },
               { num: String(toplamSoru) + '+', label: 'YKS sorusu',  desc: 'Son 4 yılda işlenen' },
             ].map(item => (
@@ -174,7 +174,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
         <SectionHeader
           eyebrow="Şubelerin Programı"
           title="11–22 Mayıs 2026"
-          sub="İki şube, iki ayrı program. Efeler şubesi haftalara göre AYT odaklı başlar; Nazilli şubesi TYT odaklı başlar. Saatler ortak, içerik şubelere göre farklılık gösterir. Kesin saatler ve derslikler kayıt sonrası iletilir."
+          sub="İki şube, iki ayrı program. Efeler haftalara göre AYT odaklı başlar; Nazilli TYT odaklı başlar. Saat slotları sabit: aynı anda yalnız tek bir sayısal ders olur (13:10 Mat · 14:00 Fiz · 14:50 Kim · 15:40 Biy). Türkçe paralel ek bloktur. Kesin saatler ve derslikler kayıt sonrası iletilir."
         />
         <!-- Sınav rozeti lejantı -->
         <div class="mt-6 flex flex-wrap items-center gap-3 text-xs">
@@ -184,6 +184,9 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
           </span>
           <span class={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-bold ${sinavRozet.TYT}`}>
             <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>TYT
+          </span>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-medium text-muted ring-1 ring-border">
+            ×N = paralel sınıf sayısı
           </span>
         </div>
       </div>
@@ -225,22 +228,51 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                           <span class="text-sm font-bold text-ink">{g.gun}</span>
                           <span class="text-xs font-medium tracking-widest text-[#FF6B1A] uppercase">{g.tarih}</span>
                         </div>
-                        <div class="px-6 pb-4 flex flex-col gap-2">
-                          {g.bloklar.map(b => (
-                            <div class="flex items-start gap-3 text-sm">
-                              <span class="text-[11px] font-mono text-muted whitespace-nowrap shrink-0 pt-0.5 w-24">{b.saat}</span>
-                              <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[b.sinav]}`}>
-                                {b.sinav}
-                              </span>
-                              <div class="min-w-0 flex-1">
-                                <span class={`block text-[11px] font-bold tracking-widest uppercase leading-tight ${dersRenk[b.ders] ?? 'text-accent'}`}>
-                                  {b.ders}
+                        <div class="px-6 pb-3 flex flex-col gap-1.5">
+                          {g.saatler.map(s => (
+                            s.ders ? (
+                              <div class="flex items-start gap-3 text-sm">
+                                <span class="text-[11px] font-mono text-muted whitespace-nowrap shrink-0 pt-0.5 w-24">{s.saat}</span>
+                                <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[s.sinav!]}`}>
+                                  {s.sinav}
                                 </span>
-                                <span class="block text-sm text-ink leading-snug">{b.konu}</span>
+                                <div class="min-w-0 flex-1">
+                                  <div class="flex items-baseline gap-2 leading-tight">
+                                    <span class={`text-[11px] font-bold tracking-widest uppercase ${dersRenk[s.ders] ?? 'text-accent'}`}>
+                                      {s.ders}
+                                    </span>
+                                    {s.kapasite && s.kapasite > 1 && (
+                                      <span class="text-[10px] font-bold text-muted">×{s.kapasite}</span>
+                                    )}
+                                  </div>
+                                  <span class="block text-sm text-ink leading-snug">{s.konu}</span>
+                                </div>
                               </div>
-                            </div>
+                            ) : (
+                              <div class="flex items-center gap-3 text-sm opacity-40">
+                                <span class="text-[11px] font-mono whitespace-nowrap shrink-0 w-24">{s.saat}</span>
+                                <span class="text-xs italic text-muted">— ders yok —</span>
+                              </div>
+                            )
                           ))}
                         </div>
+                        {g.turkce && (
+                          <div class="mx-6 mb-4 mt-1 rounded-lg bg-violet-50 ring-1 ring-violet-200 px-3 py-2 flex items-start gap-2">
+                            <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[g.turkce.sinav]}`}>
+                              {g.turkce.sinav}
+                            </span>
+                            <div class="min-w-0 flex-1">
+                              <div class="flex items-baseline gap-2 leading-tight">
+                                <span class="text-[11px] font-bold tracking-widest uppercase text-violet-600">Türkçe</span>
+                                <span class="text-[10px] text-muted">paralel</span>
+                                {g.turkce.kapasite > 1 && (
+                                  <span class="text-[10px] font-bold text-muted">×{g.turkce.kapasite}</span>
+                                )}
+                              </div>
+                              <span class="block text-xs text-ink leading-snug">{g.turkce.konu}</span>
+                            </div>
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -252,7 +284,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
       </div>
 
       <p class="text-xs text-muted mt-6 text-center max-w-3xl mx-auto leading-relaxed">
-        * Konu seçimleri KNT Akademi koçlarının son 4 yılın TYT ve AYT sorularını analiziyle yapıldı. Tam liste aşağıda.
+        * Saat slotları sabit: 13:10 Matematik, 14:00 Fizik, 14:50 Kimya, 15:40 Biyoloji. Türkçe paralel olarak işlenir. Boş slotlar o gün ilgili dersin olmadığı saatlerdir.
       </p>
     </div>
   </section>

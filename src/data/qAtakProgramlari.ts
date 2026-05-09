@@ -1,24 +1,30 @@
-// Q ATAK KAMPI 11–22 Mayıs 2026 — Şubeye özel ders programları.
-// İçerik: KNT Akademi koçlarının AYT ve TYT 4-yıllık soru analizine göre seçilen
-// kritik konular. Şubeler farklı sıralama izler:
-//   • Efeler:  Hafta 1 = AYT, Hafta 2 = TYT
-//   • Nazilli: Hafta 1 = TYT, Hafta 2 = AYT
-// Saatler iki şube için ortak (default). Şube ekibi içeriği uyarlarsa burada güncellenir.
+﻿// AUTO-GENERATED from 'ATAK DERS PLANI.xlsx' on 2026-05-09.
+// Excel sheet'leri (NAZILLI + EFELER) saat-gun-ders kapasite matrisi olarak parse edildi.
+// Ayni anda sayisal ders olmamasi icin her sayisal ders kendi sabit saat slotuna atanir:
+//   13:10 -> Matematik, 14:00 -> Fizik, 14:50 -> Kimya, 15:40 -> Biyoloji
+// Turkce paralel ek bilgidir (gun boyunca varsa).
+// Konu havuzu: her ders icin 5 AYT + 5 TYT, sube-hafta eslemesine gore rotasyon:
+//   Efeler:  Hafta 1 = AYT, Hafta 2 = TYT
+//   Nazilli: Hafta 1 = TYT, Hafta 2 = AYT
+//   Turkce: AYT yok; her zaman TYT konusu kullanilir.
 
 export type Sube = 'efeler' | 'nazilli';
+export type Ders = 'Matematik' | 'Fizik' | 'Kimya' | 'Biyoloji' | 'Türkçe';
 
-export type ProgramBlok = {
-  saat:  string;
-  ders:  'Matematik' | 'Geometri' | 'Fizik' | 'Kimya' | 'Biyoloji';
-  sinav: 'TYT' | 'AYT';
-  konu:  string;
+export type SaatBlok = {
+  saat:     string;
+  ders?:    Ders;
+  sinav?:   'TYT' | 'AYT';
+  konu?:    string;
+  kapasite?: number;
 };
 
 export type ProgramGun = {
-  gun:   string;
-  tarih: string;
-  hafta: 1 | 2;
-  bloklar: ProgramBlok[];
+  gun:    string;
+  tarih:  string;
+  hafta:  1 | 2;
+  saatler: SaatBlok[];
+  turkce?: { sinav: 'TYT' | 'AYT'; konu: string; kapasite: number };
 };
 
 export type Program = {
@@ -28,181 +34,223 @@ export type Program = {
   gunler:  ProgramGun[];
 };
 
+export const SAATLER: string[] = [
+  '13:10 – 14:00',
+  '14:00 – 14:50',
+  '14:50 – 15:40',
+  '15:40 – 16:30',
+];
+
 export const SUBE_BILGI: Record<Sube, { ad: string; konum: string; renk: string; rota: string }> = {
   efeler:  { ad: 'Efeler',  konum: 'Aydın · Efeler',  renk: 'text-[#FF6B1A]', rota: 'efeler'  },
   nazilli: { ad: 'Nazilli', konum: 'Aydın · Nazilli', renk: 'text-sky-400',  rota: 'nazilli' },
 };
 
-const SAATLER = [
-  '09:00 – 10:30',
-  '10:45 – 12:15',
-  '13:30 – 15:00',
-  '15:15 – 16:45',
-  '17:00 – 18:30',
-];
-
-// Yardımcı: bir günün 5 bloğunu hızlıca üretmek için
-function gun(
-  gun: string, tarih: string, hafta: 1 | 2,
-  mat: { sinav: 'TYT'|'AYT'; konu: string },
-  geo: { sinav: 'TYT'|'AYT'; konu: string },
-  fiz: { sinav: 'TYT'|'AYT'; konu: string },
-  kim: { sinav: 'TYT'|'AYT'; konu: string },
-  biy: { sinav: 'TYT'|'AYT'; konu: string },
-): ProgramGun {
-  return {
-    gun, tarih, hafta,
-    bloklar: [
-      { saat: SAATLER[0], ders: 'Matematik', sinav: mat.sinav, konu: mat.konu },
-      { saat: SAATLER[1], ders: 'Geometri',  sinav: geo.sinav, konu: geo.konu },
-      { saat: SAATLER[2], ders: 'Fizik',     sinav: fiz.sinav, konu: fiz.konu },
-      { saat: SAATLER[3], ders: 'Kimya',     sinav: kim.sinav, konu: kim.konu },
-      { saat: SAATLER[4], ders: 'Biyoloji',  sinav: biy.sinav, konu: biy.konu },
-    ],
-  };
-}
-
-// ─── EFELER — Hafta 1: AYT odaklı, Hafta 2: TYT odaklı ─────────────────────
 export const efelerProgrami: Program = {
   sube:   'efeler',
   baslik: 'KNT Akademi Efeler',
   konum:  'Aydın · Efeler',
   gunler: [
-    // Hafta 1 (11–15 Mayıs) — AYT
-    gun('Pazartesi', '11 Mayıs', 1,
-      { sinav: 'AYT', konu: 'Türevin Kavramı' },
-      { sinav: 'AYT', konu: 'Çemberin Temel Elemanları' },
-      { sinav: 'AYT', konu: 'Manyetik Akı ve İndüksiyon' },
-      { sinav: 'AYT', konu: 'Esterler' },
-      { sinav: 'AYT', konu: 'Bitki Fizyolojisi' }),
-    gun('Salı', '12 Mayıs', 1,
-      { sinav: 'AYT', konu: 'İki Kat (Yarım) Açı Formülleri' },
-      { sinav: 'AYT', konu: 'Piramitler' },
-      { sinav: 'AYT', konu: 'Düzgün Çembersel Hareket' },
-      { sinav: 'AYT', konu: 'Alkenler (Olefinler)' },
-      { sinav: 'AYT', konu: 'Nükleik Asitler & Kalıtım' }),
-    gun('Çarşamba', '13 Mayıs', 1,
-      { sinav: 'AYT', konu: 'Belirli İntegral' },
-      { sinav: 'AYT', konu: 'Çemberde Uzunluk' },
-      { sinav: 'AYT', konu: 'Tork (Moment) ve Denge' },
-      { sinav: 'AYT', konu: 'Elektrot Potansiyelleri' },
-      { sinav: 'AYT', konu: 'Oksijenli Solunum' }),
-    gun('Perşembe', '14 Mayıs', 1,
-      { sinav: 'AYT', konu: 'Logaritmalı Eşitsizlikler' },
-      { sinav: 'AYT', konu: 'Dairede Alan' },
-      { sinav: 'AYT', konu: 'Akım Geçen Tele Manyetik Kuvvet' },
-      { sinav: 'AYT', konu: 'Atom Modelleri' },
-      { sinav: 'AYT', konu: 'Sindirim Sistemi' }),
-    gun('Cuma', '15 Mayıs', 1,
-      { sinav: 'AYT', konu: 'Maksimum-Minimum Problemleri' },
-      { sinav: 'AYT', konu: 'Doğru Denklemleri' },
-      { sinav: 'AYT', konu: 'Sığa (Kapasite)' },
-      { sinav: 'AYT', konu: 'Çözeltilerin Özellikleri' },
-      { sinav: 'AYT', konu: 'Lenf & Bağışıklık Sistemi' }),
-
-    // Hafta 2 (18–22 Mayıs) — TYT
-    gun('Pazartesi', '18 Mayıs', 2,
-      { sinav: 'TYT', konu: 'Sayı Problemleri' },
-      { sinav: 'TYT', konu: 'Üçgende Eşlik ve Benzerlik' },
-      { sinav: 'TYT', konu: 'Newton\'ın Hareket Yasaları' },
-      { sinav: 'TYT', konu: 'Atom Modelleri (TYT)' },
-      { sinav: 'TYT', konu: 'Mendel İlkeleri & Soyağacı' }),
-    gun('Salı', '19 Mayıs', 2,
-      { sinav: 'TYT', konu: 'Temel Yüzde Problemleri' },
-      { sinav: 'TYT', konu: 'Özel Üçgenlerde Alan' },
-      { sinav: 'TYT', konu: 'Mercekler & Optik' },
-      { sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar' },
-      { sinav: 'TYT', konu: 'Hücre & Madde Geçişi' }),
-    gun('Çarşamba', '20 Mayıs', 2,
-      { sinav: 'TYT', konu: 'Oran-Orantı Problemleri' },
-      { sinav: 'TYT', konu: 'Dik Prizmalarda Alan-Hacim' },
-      { sinav: 'TYT', konu: 'Isı ve Sıcaklık' },
-      { sinav: 'TYT', konu: 'Kovalent Bağlar & Etkileşimler' },
-      { sinav: 'TYT', konu: 'Ekosistem & Madde Döngüleri' }),
-    gun('Perşembe', '21 Mayıs', 2,
-      { sinav: 'TYT', konu: 'Hareket Problemleri' },
-      { sinav: 'TYT', konu: 'Dörtgenler' },
-      { sinav: 'TYT', konu: 'Madde ve Özkütle' },
-      { sinav: 'TYT', konu: 'Karışımlar & Ayırma Yöntemleri' },
-      { sinav: 'TYT', konu: 'Mitoz & Mayoz Bölünme' }),
-    gun('Cuma', '22 Mayıs', 2,
-      { sinav: 'TYT', konu: 'Emek (İşçi-Havuz) Problemleri' },
-      { sinav: 'TYT', konu: 'Silindir & Pisagor' },
-      { sinav: 'TYT', konu: 'Elektrik Akımı (Ohm Yasası)' },
-      { sinav: 'TYT', konu: 'Katılar & Hal Değişimleri' },
-      { sinav: 'TYT', konu: 'Canlıların Temel Bileşenleri' }),
+    {
+      gun: 'Pazartesi', tarih: '11 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Türevin Kavramı', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Manyetik Akı ve İndüksiyon', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Esterler', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Bitki Fizyolojisi', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1 },
+    },
+    {
+      gun: 'Salı', tarih: '12 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'İki Kat (Yarım) Açı Formülleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Düzgün Çembersel Hareket', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Nükleik Asitler ve Kalıtım', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1 },
+    },
+    {
+      gun: 'Çarşamba', tarih: '13 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Belirli İntegral', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Tork (Moment) ve Denge', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Elektrot Potansiyelleri', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Oksijenli Solunum', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Perşembe', tarih: '14 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Logaritmalı Eşitsizlikler', kapasite: 2 },
+        { saat: '14:00 – 14:50' },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Atom Modelleri (AYT)', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Sindirim Sistemi', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Yardımcı Düşünceler', kapasite: 1 },
+    },
+    {
+      gun: 'Cuma', tarih: '15 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Maksimum-Minimum Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Akım Geçen Tele Manyetik Kuvvet', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Çözeltilerin Özellikleri', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Lenf ve Bağışıklık Sistemi', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Düşünce Akışını Bozan Cümle', kapasite: 1 },
+    },
+    {
+      gun: 'Pazartesi', tarih: '18 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Sayı Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Newton\'ın Hareket Yasaları', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Atom Modelleri (TYT)', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mendel İlkeleri ve Soyağacı', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1 },
+    },
+    {
+      gun: 'Salı', tarih: '19 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Temel Yüzde Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Mercekler ve Optik', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Hücre ve Madde Geçişi', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1 },
+    },
+    {
+      gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Oran-Orantı Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Isı ve Sıcaklık', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Kovalent Bağlar ve Etkileşimler', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Ekosistem ve Madde Döngüleri', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Hareket Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Madde ve Özkütle', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Karışımlar ve Ayırma Yöntemleri', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mitoz ve Mayoz Bölünme', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Yardımcı Düşünceler', kapasite: 1 },
+    },
+    {
+      gun: 'Cuma', tarih: '22 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Emek (İşçi-Havuz) Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Elektrik Akımı (Ohm Yasası)', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Katılar ve Hal Değişimleri', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Canlıların Temel Bileşenleri', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Düşünce Akışını Bozan Cümle', kapasite: 1 },
+    },
   ],
 };
 
-// ─── NAZİLLİ — Hafta 1: TYT odaklı, Hafta 2: AYT odaklı ────────────────────
 export const nazilliProgrami: Program = {
   sube:   'nazilli',
   baslik: 'KNT Akademi Nazilli',
   konum:  'Aydın · Nazilli',
   gunler: [
-    // Hafta 1 (11–15 Mayıs) — TYT
-    gun('Pazartesi', '11 Mayıs', 1,
-      { sinav: 'TYT', konu: 'Sayı Problemleri' },
-      { sinav: 'TYT', konu: 'Üçgende Eşlik ve Benzerlik' },
-      { sinav: 'TYT', konu: 'Newton\'ın Hareket Yasaları' },
-      { sinav: 'TYT', konu: 'Karışımlar & Ayırma Yöntemleri' },
-      { sinav: 'TYT', konu: 'Hücre & Madde Geçişi' }),
-    gun('Salı', '12 Mayıs', 1,
-      { sinav: 'TYT', konu: 'Temel Yüzde Problemleri' },
-      { sinav: 'TYT', konu: 'Özel Üçgenlerde Alan' },
-      { sinav: 'TYT', konu: 'Mercekler & Optik' },
-      { sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar' },
-      { sinav: 'TYT', konu: 'Mendel İlkeleri & Soyağacı' }),
-    gun('Çarşamba', '13 Mayıs', 1,
-      { sinav: 'TYT', konu: 'Hareket Problemleri' },
-      { sinav: 'TYT', konu: 'Dörtgenler' },
-      { sinav: 'TYT', konu: 'Madde ve Özkütle' },
-      { sinav: 'TYT', konu: 'Atom Modelleri (TYT)' },
-      { sinav: 'TYT', konu: 'Mitoz & Mayoz Bölünme' }),
-    gun('Perşembe', '14 Mayıs', 1,
-      { sinav: 'TYT', konu: 'Oran-Orantı Problemleri' },
-      { sinav: 'TYT', konu: 'Dik Prizmalarda Alan-Hacim' },
-      { sinav: 'TYT', konu: 'Isı ve Sıcaklık' },
-      { sinav: 'TYT', konu: 'Kovalent Bağlar & Etkileşimler' },
-      { sinav: 'TYT', konu: 'Ekosistem & Madde Döngüleri' }),
-    gun('Cuma', '15 Mayıs', 1,
-      { sinav: 'TYT', konu: 'Emek (İşçi-Havuz) Problemleri' },
-      { sinav: 'TYT', konu: 'Silindir & Pisagor' },
-      { sinav: 'TYT', konu: 'Elektrik Akımı (Ohm Yasası)' },
-      { sinav: 'TYT', konu: 'Katılar & Hal Değişimleri' },
-      { sinav: 'TYT', konu: 'Canlıların Temel Bileşenleri' }),
-
-    // Hafta 2 (18–22 Mayıs) — AYT
-    gun('Pazartesi', '18 Mayıs', 2,
-      { sinav: 'AYT', konu: 'İki Kat (Yarım) Açı Formülleri' },
-      { sinav: 'AYT', konu: 'Çemberin Temel Elemanları' },
-      { sinav: 'AYT', konu: 'Düzgün Çembersel Hareket' },
-      { sinav: 'AYT', konu: 'Esterler' },
-      { sinav: 'AYT', konu: 'Bitki Fizyolojisi' }),
-    gun('Salı', '19 Mayıs', 2,
-      { sinav: 'AYT', konu: 'Belirli İntegral' },
-      { sinav: 'AYT', konu: 'Piramitler' },
-      { sinav: 'AYT', konu: 'Manyetik Akı ve İndüksiyon' },
-      { sinav: 'AYT', konu: 'Alkenler (Olefinler)' },
-      { sinav: 'AYT', konu: 'Nükleik Asitler & Kalıtım' }),
-    gun('Çarşamba', '20 Mayıs', 2,
-      { sinav: 'AYT', konu: 'Türevin Kavramı' },
-      { sinav: 'AYT', konu: 'Çemberde Uzunluk' },
-      { sinav: 'AYT', konu: 'Tork (Moment) ve Denge' },
-      { sinav: 'AYT', konu: 'Elektrot Potansiyelleri' },
-      { sinav: 'AYT', konu: 'Oksijenli Solunum' }),
-    gun('Perşembe', '21 Mayıs', 2,
-      { sinav: 'AYT', konu: 'Logaritmalı Eşitsizlikler' },
-      { sinav: 'AYT', konu: 'Dairede Alan' },
-      { sinav: 'AYT', konu: 'Akım Geçen Tele Manyetik Kuvvet' },
-      { sinav: 'AYT', konu: 'Atom Modelleri' },
-      { sinav: 'AYT', konu: 'Sindirim Sistemi' }),
-    gun('Cuma', '22 Mayıs', 2,
-      { sinav: 'AYT', konu: 'Maksimum-Minimum Problemleri' },
-      { sinav: 'AYT', konu: 'Doğru Denklemleri' },
-      { sinav: 'AYT', konu: 'Sığa (Kapasite)' },
-      { sinav: 'AYT', konu: 'Çözeltilerin Özellikleri' },
-      { sinav: 'AYT', konu: 'Lenf & Bağışıklık Sistemi' }),
+    {
+      gun: 'Pazartesi', tarih: '11 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Sayı Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Newton\'ın Hareket Yasaları', kapasite: 1 },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mendel İlkeleri ve Soyağacı', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Salı', tarih: '12 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Temel Yüzde Problemleri', kapasite: 1 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Mercekler ve Optik', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Atom Modelleri (TYT)', kapasite: 1 },
+        { saat: '15:40 – 16:30' },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1 },
+    },
+    {
+      gun: 'Çarşamba', tarih: '13 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00' },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Isı ve Sıcaklık', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Hücre ve Madde Geçişi', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Perşembe', tarih: '14 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Oran-Orantı Problemleri', kapasite: 1 },
+        { saat: '14:00 – 14:50' },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Kovalent Bağlar ve Etkileşimler', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Ekosistem ve Madde Döngüleri', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1 },
+    },
+    {
+      gun: 'Cuma', tarih: '15 Mayıs', hafta: 1,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Hareket Problemleri', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Madde ve Özkütle', kapasite: 1 },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mitoz ve Mayoz Bölünme', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Pazartesi', tarih: '18 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Türevin Kavramı', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Manyetik Akı ve İndüksiyon', kapasite: 1 },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Bitki Fizyolojisi', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Salı', tarih: '19 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'İki Kat (Yarım) Açı Formülleri', kapasite: 1 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Düzgün Çembersel Hareket', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Esterler', kapasite: 1 },
+        { saat: '15:40 – 16:30' },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1 },
+    },
+    {
+      gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00' },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Tork (Moment) ve Denge', kapasite: 1 },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Nükleik Asitler ve Kalıtım', kapasite: 1 },
+      ],
+    },
+    {
+      gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Belirli İntegral', kapasite: 1 },
+        { saat: '14:00 – 14:50' },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Elektrot Potansiyelleri', kapasite: 1 },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Oksijenli Solunum', kapasite: 1 },
+      ],
+      turkce: { sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1 },
+    },
+    {
+      gun: 'Cuma', tarih: '22 Mayıs', hafta: 2,
+      saatler: [
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Logaritmalı Eşitsizlikler', kapasite: 2 },
+        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'Akım Geçen Tele Manyetik Kuvvet', kapasite: 1 },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'Sindirim Sistemi', kapasite: 1 },
+      ],
+    },
   ],
 };
 
