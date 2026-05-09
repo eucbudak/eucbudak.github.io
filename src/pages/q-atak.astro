@@ -174,7 +174,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
         <SectionHeader
           eyebrow="Şubelerin Programı"
           title="11–22 Mayıs 2026"
-          sub="İki şube, iki ayrı program. Efeler haftalara göre AYT odaklı başlar; Nazilli TYT odaklı başlar. Saat slotları sabit: aynı anda yalnız tek bir sayısal ders olur (13:10 Mat · 14:00 Fiz · 14:50 Kim · 15:40 Biy). Türkçe paralel ek bloktur. Kesin saatler ve derslikler kayıt sonrası iletilir."
+          sub="İki şube, iki ayrı program. Her iki şube de Hafta 1'de AYT, Hafta 2'de TYT odaklı çalışır. Saat slotları sabit (13:10 Mat · 14:00 Fiz · 14:50 Kim · 15:40 Biy). Türkçe ders olan saatlerde sayısal ders yoktur. Kesin saatler ve derslikler kayıt sonrası iletilir."
         />
         <!-- Sınav rozeti lejantı -->
         <div class="mt-6 flex flex-wrap items-center gap-3 text-xs">
@@ -256,23 +256,6 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                             )
                           ))}
                         </div>
-                        {g.turkce && (
-                          <div class="mx-6 mb-4 mt-1 rounded-lg bg-violet-50 ring-1 ring-violet-200 px-3 py-2 flex items-start gap-2">
-                            <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[g.turkce.sinav]}`}>
-                              {g.turkce.sinav}
-                            </span>
-                            <div class="min-w-0 flex-1">
-                              <div class="flex items-baseline gap-2 leading-tight">
-                                <span class="text-[11px] font-bold tracking-widest uppercase text-violet-600">Türkçe</span>
-                                <span class="text-[10px] text-muted">paralel</span>
-                                {g.turkce.kapasite > 1 && (
-                                  <span class="text-[10px] font-bold text-muted">×{g.turkce.kapasite}</span>
-                                )}
-                              </div>
-                              <span class="block text-xs text-ink leading-snug">{g.turkce.konu}</span>
-                            </div>
-                          </div>
-                        )}
                       </li>
                     ))}
                   </ul>
