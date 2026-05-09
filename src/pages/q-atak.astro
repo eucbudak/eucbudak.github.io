@@ -1,8 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import CTABand from '../components/CTABand.astro';
-import WhatsAppButton from '../components/WhatsAppButton.astro';
 import {
   konular,
   DERS_SIRASI_AYT,
@@ -89,12 +87,14 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
           Bugüne kadar yaptığın denemelerdeki <strong class="text-white">eksiklere</strong> ve sınavda <strong class="text-white">en çok soru çıkan başlıklara</strong> odaklanan 10 günlük yoğun bir kamp. <strong class="text-[#FF6B1A]">AYT</strong> ve <strong class="text-sky-300">TYT</strong> sayısal derslerinin kritik konularına son atak.
         </p>
         <div class="flex flex-col sm:flex-row items-start gap-4">
-          <WhatsAppButton ctx="q-atak" label="Kayıt için WhatsApp" class="text-base px-7 py-3.5" />
-          <a href="#program" class="inline-flex items-center gap-2 text-base font-semibold text-white/70 hover:text-white transition-colors py-3.5">
+          <a href="#program" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#FF6B1A] hover:bg-[#FF8540] text-ink text-base font-semibold transition-colors">
             Programı Gör
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/>
             </svg>
+          </a>
+          <a href="#konu-listesi" class="inline-flex items-center gap-2 text-base font-semibold text-white/70 hover:text-white transition-colors py-3.5">
+            Kritik Konu Listesi
           </a>
         </div>
 
@@ -393,11 +393,19 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
   </section>
 
 
-  <!-- CTA -->
-  <CTABand
-    title="Son 1 ay. Boşa harcama."
-    sub="Q ATAK KAMPI'na kayıt ol — koçunla beraber gir."
-    ctx="q-atak"
-    label="WhatsApp ile kayıt"
-  />
+  <!-- KAPANIŞ -->
+  <section class="bg-ink text-white py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 100%, rgba(255,107,26,0.15) 0%, transparent 60%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8 text-center flex flex-col items-center gap-6">
+      <span class="text-xs font-bold tracking-widest text-[#FF6B1A] uppercase">11–22 Mayıs 2026</span>
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight" style="letter-spacing:-0.03em">
+        Son 1 ay. Boşa harcama.
+      </h2>
+      <p class="text-base md:text-lg text-white/60 leading-relaxed max-w-xl">
+        Q ATAK KAMPI Efeler ve Nazilli şubelerinde başlıyor. Detaylar için kendi şubene danış.
+      </p>
+    </div>
+  </section>
 </Base>
