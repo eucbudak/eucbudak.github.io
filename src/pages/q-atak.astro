@@ -152,7 +152,6 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
         <SectionHeader
           eyebrow="Şubelerin Programı"
           title="11–22 Mayıs 2026"
-          sub="İki şube, iki ayrı program. Her iki haftada da hem AYT hem TYT konuları işlenir (alterne). Sayısal dersler kendi sabit saatinde (13:10 Mat · 14:00 Fiz · 14:50 Kim · 15:40 Biy). Türkçe Excel'de dolu olan günlerde boş saat slotuna yerleştirilir; sayısal konu havuzunda yer kalmazsa Türkçe slotlarını da kullanabilir. Kesin saatler ve derslikler kayıt sonrası iletilir."
         />
         <!-- Sınav rozeti lejantı -->
         <div class="mt-6 flex flex-wrap items-center gap-3 text-xs">
@@ -162,9 +161,6 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
           </span>
           <span class={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-bold ${sinavRozet.TYT}`}>
             <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>TYT
-          </span>
-          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-medium text-muted ring-1 ring-border">
-            ×N = paralel sınıf sayısı
           </span>
         </div>
       </div>
@@ -209,23 +205,28 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                         <div class="px-6 pb-3 flex flex-col gap-1.5">
                           {g.saatler.map(s => (
                             s.ders ? (
-                              <div class="flex items-start gap-3 text-sm">
-                                <span class="text-[11px] font-mono text-muted whitespace-nowrap shrink-0 pt-0.5 w-24">{s.saat}</span>
-                                <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[s.sinav!]}`}>
-                                  {s.sinav}
-                                </span>
-                                <div class="min-w-0 flex-1">
-                                  <div class="flex items-baseline gap-2 leading-tight">
-                                    <span class={`text-[11px] font-bold tracking-widest uppercase ${dersRenk[s.ders] ?? 'text-accent'}`}>
+                              s.isFirst ? (
+                                <div class="flex items-start gap-3 text-sm">
+                                  <span class="text-[11px] font-mono text-muted whitespace-nowrap shrink-0 pt-0.5 w-24">{s.saat}</span>
+                                  <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[s.sinav!]}`}>
+                                    {s.sinav}
+                                  </span>
+                                  <div class="min-w-0 flex-1">
+                                    <span class={`block text-[11px] font-bold tracking-widest uppercase leading-tight ${dersRenk[s.ders] ?? 'text-accent'}`}>
                                       {s.ders}
                                     </span>
-                                    {s.kapasite && s.kapasite > 1 && (
-                                      <span class="text-[10px] font-bold text-muted">×{s.kapasite}</span>
-                                    )}
+                                    <span class="block text-sm text-ink leading-snug">{s.konu}</span>
                                   </div>
-                                  <span class="block text-sm text-ink leading-snug">{s.konu}</span>
                                 </div>
-                              </div>
+                              ) : (
+                                <div class="flex items-center gap-3 text-sm">
+                                  <span class="text-[11px] font-mono text-muted whitespace-nowrap shrink-0 pt-0.5 w-24">{s.saat}</span>
+                                  <span class="text-[10px] uppercase tracking-widest text-muted/60 italic shrink-0">↳ devam</span>
+                                  <span class={`text-[11px] font-bold tracking-widest uppercase opacity-60 ${dersRenk[s.ders] ?? 'text-accent'}`}>
+                                    {s.ders}
+                                  </span>
+                                </div>
+                              )
                             ) : (
                               <div class="flex items-center gap-3 text-sm opacity-40">
                                 <span class="text-[11px] font-mono whitespace-nowrap shrink-0 w-24">{s.saat}</span>
