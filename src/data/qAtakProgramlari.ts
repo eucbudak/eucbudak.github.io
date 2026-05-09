@@ -1,9 +1,13 @@
 ﻿// AUTO-GENERATED from 'ATAK DERS PLANI.xlsx' on 2026-05-09.
 // Slot atama algoritmasi:
 //   - Excel'deki kapasite N = o ders icin N saat ayrildi demektir (paralel sinif degil).
-//   - Mat -> Fiz -> Kim -> Biy -> Turkce sirasiyla, her ders kapasitesi kadar ARDISIK
-//     saat slotunu kullanir. Mat Ã—2 ise 13:10 + 14:00 ikisi de Mat (devam).
+//   - Her ders kapasitesi kadar ARDISIK saat slotunu kullanir.
+//     Ornek: Mat Ã—2 ise 13:10 + 14:00 ikisi de Mat (devam satiri).
 //   - Bir sonraki ders, oncekinin bittigi saatte baslar.
+//   - Sube bazli ders sirasi:
+//       EFELER:  Mat -> Fiz -> Kim -> Biy -> (Turkce son)
+//       NAZILLI: Mat -> Fiz -> Biy -> Turkce -> Kim
+//                (Turkce Kim'den once = Turkce mutlaka, eleme Kimya'da)
 //   - Yer kalmazsa konu eksiklere gider; raporlanir.
 //   - Konu havuzu: AYT-TYT alterne (her dersin 10 gun boyunca dolu olduklari uzerinden).
 
@@ -162,16 +166,16 @@ export const nazilliProgrami: Program = {
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Sayı Problemleri', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Newton\'ın Hareket Yasaları', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Esterler', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafta Metni Anlama ve Yorumlama', kapasite: 1, isFirst: true },
+        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'AYT', konu: 'Esterler', kapasite: 1, isFirst: true },
       ],
     },
     {
       gun: 'Çarşamba', tarih: '13 Mayıs', hafta: 1,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Fizik', sinav: 'AYT', konu: 'Düzgün Çembersel Hareket', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Kimya', sinav: 'TYT', konu: 'Atom Modelleri (TYT)', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mendel İlkeleri ve Soyağacı', kapasite: 1, isFirst: true },
+        { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'TYT', konu: 'Mendel İlkeleri ve Soyağacı', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Atom Modelleri (TYT)', kapasite: 1, isFirst: true },
         { saat: '15:40 – 16:30' },
       ],
     },
@@ -179,9 +183,9 @@ export const nazilliProgrami: Program = {
       gun: 'Perşembe', tarih: '14 Mayıs', hafta: 1,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'İki Kat (Yarım) Açı Formülleri', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Biyoloji', sinav: 'AYT', konu: 'Nükleik Asitler ve Kalıtım', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1, isFirst: true },
+        { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'AYT', konu: 'Nükleik Asitler ve Kalıtım', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafın Ana Düşüncesi', kapasite: 1, isFirst: true },
+        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1, isFirst: true },
       ],
     },
     {
@@ -207,16 +211,16 @@ export const nazilliProgrami: Program = {
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'Oran-Orantı Problemleri', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'Isı ve Sıcaklık', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafta Yardımcı Düşünceler', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'Paragrafta Yardımcı Düşünceler', kapasite: 1, isFirst: true },
+        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'TYT', konu: 'Asitler, Bazlar ve Tuzlar', kapasite: 1, isFirst: true },
       ],
     },
     {
       gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Fizik', sinav: 'AYT', konu: 'Akım Geçen Tele Manyetik Kuvvet', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Kimya', sinav: 'AYT', konu: 'Elektrot Potansiyelleri', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Biyoloji', sinav: 'TYT', konu: 'Ekosistem ve Madde Döngüleri', kapasite: 1, isFirst: true },
+        { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'TYT', konu: 'Ekosistem ve Madde Döngüleri', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Elektrot Potansiyelleri', kapasite: 1, isFirst: true },
         { saat: '15:40 – 16:30' },
       ],
     },
@@ -224,9 +228,9 @@ export const nazilliProgrami: Program = {
       gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'Logaritmalı Eşitsizlikler', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Kimya', sinav: 'TYT', konu: 'Kovalent Bağlar ve Etkileşimler', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Biyoloji', sinav: 'AYT', konu: 'Sindirim Sistemi', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Türkçe', sinav: 'TYT', konu: 'Düşünce Akışını Bozan Cümle', kapasite: 1, isFirst: true },
+        { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'AYT', konu: 'Sindirim Sistemi', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'Düşünce Akışını Bozan Cümle', kapasite: 1, isFirst: true },
+        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'TYT', konu: 'Kovalent Bağlar ve Etkileşimler', kapasite: 1, isFirst: true },
       ],
     },
     {
