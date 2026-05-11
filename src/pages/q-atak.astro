@@ -197,11 +197,21 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                   </div>
                   <ul class="divide-y divide-border">
                     {h.gunler.map(g => (
-                      <li>
+                      <li class={g.tatil ? 'bg-red-50/40' : ''}>
                         <div class="px-6 pt-4 pb-2 flex items-baseline justify-between gap-3">
                           <span class="text-sm font-bold text-ink">{g.gun}</span>
                           <span class="text-xs font-medium tracking-widest text-[#FF6B1A] uppercase">{g.tarih}</span>
                         </div>
+                        {g.tatil ? (
+                          <div class="mx-6 mb-4 rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3 flex items-start gap-3">
+                            <span class="text-lg leading-none mt-0.5" aria-hidden="true">🇹🇷</span>
+                            <div class="min-w-0 flex-1">
+                              <p class="text-xs font-bold tracking-widest text-red-700 uppercase">Resmi Tatil</p>
+                              <p class="text-sm text-red-900 leading-snug mt-0.5">{g.tatil}</p>
+                              <p class="text-xs text-red-700/70 mt-1">Bu gün ders yapılmayacak.</p>
+                            </div>
+                          </div>
+                        ) : (
                         <div class="px-6 pb-3 flex flex-col gap-1.5">
                           {g.saatler.map(s => (
                             s.ders ? (
@@ -235,6 +245,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                             )
                           ))}
                         </div>
+                        )}
                       </li>
                     ))}
                   </ul>

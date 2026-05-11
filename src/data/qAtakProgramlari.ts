@@ -28,6 +28,7 @@ export type ProgramGun = {
   tarih:  string;
   hafta:  1 | 2;
   saatler: SaatBlok[];
+  tatil?: string;   // doluysa o gun resmi tatil, ders yok
 };
 
 export type Program = {
@@ -111,6 +112,16 @@ export const efelerProgrami: Program = {
     {
       gun: 'Salı', tarih: '19 Mayıs', hafta: 2,
       saatler: [
+        { saat: '13:10 – 14:00' },
+        { saat: '14:00 – 14:50' },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30' },
+      ],
+      tatil: 'Atatürk\'ü Anma, Gençlik ve Spor Bayramı',
+    },
+    {
+      gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
+      saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'LOGARİTMALI EŞİTSİZLİKLER', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'MADDE VE ÖZKÜTLE', kapasite: 1, isFirst: true },
         { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'ELEKTROLİZ-KOROZYON', kapasite: 1, isFirst: true },
@@ -118,7 +129,7 @@ export const efelerProgrami: Program = {
       ],
     },
     {
-      gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
+      gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'BASİT OLAYLARIN OLASILIKLARI', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'BASİT HARMONİK HAREKET', kapasite: 1, isFirst: true },
@@ -127,21 +138,12 @@ export const efelerProgrami: Program = {
       ],
     },
     {
-      gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
+      gun: 'Cuma', tarih: '22 Mayıs', hafta: 2,
       saatler: [
         { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'MAKSİMUM MİNİMUM PROBLEMLERİ', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'ISI VE SICAKLIK', kapasite: 1, isFirst: true },
         { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'SULU ÇÖZELTİLERDE ASİT-BAZ DENGESİ', kapasite: 1, isFirst: true },
         { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'AYT', konu: 'HORMONLARIN ÖZELLİKLERİ', kapasite: 1, isFirst: true },
-      ],
-    },
-    {
-      gun: 'Cuma', tarih: '22 Mayıs', hafta: 2,
-      saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'EMEK PROBLEMLERİ', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'AYT', konu: 'SIĞA (KAPASİTE)', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'KATILAR', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'CANLILARIN ÇEŞİTLİLİĞİ VE SINIFLANDIRILMASI', kapasite: 1, isFirst: true },
       ],
     },
   ],
@@ -209,36 +211,37 @@ export const nazilliProgrami: Program = {
     {
       gun: 'Salı', tarih: '19 Mayıs', hafta: 2,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'SAYI PROBLEMLERİ', kapasite: 1, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Fizik', sinav: 'TYT', konu: 'MADDE VE ÖZKÜTLE', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'PARAGRAFIN ANA DÜŞÜNCESİ', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'TYT', konu: 'KARIŞIMLAR', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00' },
+        { saat: '14:00 – 14:50' },
+        { saat: '14:50 – 15:40' },
+        { saat: '15:40 – 16:30' },
       ],
+      tatil: 'Atatürk\'ü Anma, Gençlik ve Spor Bayramı',
     },
     {
       gun: 'Çarşamba', tarih: '20 Mayıs', hafta: 2,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Fizik', sinav: 'AYT', konu: 'BASİT HARMONİK HAREKET', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00', ders: 'Fizik', sinav: 'TYT', konu: 'MADDE VE ÖZKÜTLE', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'TYT', konu: 'MENDEL İLKELERİ VE UYGULAMALARI', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Kimya', sinav: 'TYT', konu: 'KARIŞIMLAR', kapasite: 1, isFirst: true },
         { saat: '15:40 – 16:30' },
       ],
     },
     {
       gun: 'Perşembe', tarih: '21 Mayıs', hafta: 2,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'LOGARİTMALI EŞİTSİZLİKLER', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'SAYI PROBLEMLERİ', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50', ders: 'Biyoloji', sinav: 'AYT', konu: 'BİTKİSEL HORMONLAR', kapasite: 1, isFirst: true },
-        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'CÜMLEDE ANLAM', kapasite: 1, isFirst: true },
-        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'TYT', konu: 'ASİTLER, BAZLAR VE TUZLAR', kapasite: 1, isFirst: true },
+        { saat: '14:50 – 15:40', ders: 'Türkçe', sinav: 'TYT', konu: 'PARAGRAFIN ANA DÜŞÜNCESİ', kapasite: 1, isFirst: true },
+        { saat: '15:40 – 16:30', ders: 'Kimya', sinav: 'AYT', konu: 'Alkenler (Olefinler)', kapasite: 1, isFirst: true },
       ],
     },
     {
       gun: 'Cuma', tarih: '22 Mayıs', hafta: 2,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'BASİT OLAYLARIN OLASILIKLARI', kapasite: 2, isFirst: true },
-        { saat: '14:00 – 14:50', ders: 'Matematik', sinav: 'TYT', konu: 'BASİT OLAYLARIN OLASILIKLARI', kapasite: 2, isFirst: false },
-        { saat: '14:50 – 15:40', ders: 'Fizik', sinav: 'TYT', konu: 'ISI VE SICAKLIK', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'AYT', konu: 'LOGARİTMALI EŞİTSİZLİKLER', kapasite: 2, isFirst: true },
+        { saat: '14:00 – 14:50', ders: 'Matematik', sinav: 'AYT', konu: 'LOGARİTMALI EŞİTSİZLİKLER', kapasite: 2, isFirst: false },
+        { saat: '14:50 – 15:40', ders: 'Fizik', sinav: 'AYT', konu: 'BASİT HARMONİK HAREKET', kapasite: 1, isFirst: true },
         { saat: '15:40 – 16:30', ders: 'Biyoloji', sinav: 'TYT', konu: 'HÜCRE', kapasite: 1, isFirst: true },
       ],
     },
