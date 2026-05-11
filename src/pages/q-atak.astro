@@ -226,6 +226,17 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                                       {s.ders}
                                     </span>
                                     <span class="block text-sm text-ink leading-snug">{s.konu}</span>
+                                    {s.paralelKonu && (
+                                      <div class="mt-1.5 pt-1.5 border-t border-dashed border-border flex items-start gap-2">
+                                        <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[s.paralelSinav!]}`}>
+                                          {s.paralelSinav}
+                                        </span>
+                                        <div class="min-w-0 flex-1">
+                                          <span class="text-[10px] font-medium tracking-wider uppercase text-muted block leading-tight">paralel sınıf</span>
+                                          <span class="block text-sm text-ink leading-snug">{s.paralelKonu}</span>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               ) : (
@@ -257,7 +268,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
       </div>
 
       <p class="text-xs text-muted mt-6 text-center max-w-3xl mx-auto leading-relaxed">
-        * Saat slotları sabit: 13:10 Matematik, 14:00 Fizik, 14:50 Kimya, 15:40 Biyoloji. Türkçe paralel olarak işlenir. Boş slotlar o gün ilgili dersin olmadığı saatlerdir.
+        * Matematik slotunda AYT ve TYT konuları paralel sınıflarda aynı anda işlenir — öğrenci isteğine göre seçer. Diğer dersler tek slot. Boş slotlar o gün ilgili dersin olmadığı saatlerdir.
       </p>
     </div>
   </section>
