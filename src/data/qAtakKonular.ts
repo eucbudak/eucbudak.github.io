@@ -94,7 +94,7 @@ export const konular: Konu[] = [
   { sinav: 'TYT', ders: 'TYT Matematik', konu: 'BASİT OLAYLARIN OLASILIKLARI', soru4Yil: 4, kriticite: 'cok-kritik', detay: 'Basit/koşullu olasılık, bağımlı-bağımsız olaylar, P(A∪B), P(A∩B)' },
   { sinav: 'TYT', ders: 'TYT Matematik', konu: 'PERMÜTASYON (SIRALAMA)', soru4Yil: 3, kriticite: 'cok-kritik', detay: 'Permütasyon, tekrarlı permütasyon, kombinasyon (seçim)' },
   { sinav: 'TYT', ders: 'TYT Matematik', konu: 'FONKSİYONLARDA İŞLEMLER', soru4Yil: 3, kriticite: 'cok-kritik', detay: 'Fonksiyon: tanım/görüntü kümesi, bileşke, ters, grafik okuma' },
-  { sinav: 'TYT', ders: 'TYT Matematik', konu: 'EBOB EKOK ( AYT )', soru4Yil: 0, kriticite: 'kritik', detay: '' },
+  { sinav: 'TYT', ders: 'TYT Matematik', konu: 'EBOB EKOK (AYT sorularında kullanmak için)', soru4Yil: 0, kriticite: 'kritik', detay: '' },
   { sinav: 'TYT', ders: 'TYT Matematik', konu: 'BASİT EŞİTSİZLİKLER', soru4Yil: 0, kriticite: 'kritik', detay: '' },
   { sinav: 'TYT', ders: 'TYT Matematik', konu: 'MUTLAK DEĞER', soru4Yil: 0, kriticite: 'kritik', detay: '' },
   { sinav: 'TYT', ders: 'TYT Türkçe', konu: 'PARAGRAFTA METNİ ANLAMA VE YORUMLAMA', soru4Yil: 6, kriticite: 'cok-kritik', detay: 'Paragrafta anlam çıkarımı, "altı çizili sözle anlatılmak istenen" (her yıl 5-7 soru)' },

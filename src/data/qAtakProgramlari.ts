@@ -170,7 +170,7 @@ export const efelerProgrami: Program = {
     {
       gun: 'Çarşamba', tarih: '3 Haziran', hafta: 3,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'EBOB EKOK ( AYT )', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'EBOB EKOK (AYT sorularında kullanmak için)', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50' },
         { saat: '14:50 – 15:40' },
         { saat: '15:40 – 16:30' },
@@ -332,7 +332,7 @@ export const nazilliProgrami: Program = {
     {
       gun: 'Cuma', tarih: '5 Haziran', hafta: 3,
       saatler: [
-        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'EBOB EKOK ( AYT )', kapasite: 1, isFirst: true },
+        { saat: '13:10 – 14:00', ders: 'Matematik', sinav: 'TYT', konu: 'EBOB EKOK (AYT sorularında kullanmak için)', kapasite: 1, isFirst: true },
         { saat: '14:00 – 14:50' },
         { saat: '14:50 – 15:40' },
         { saat: '15:40 – 16:30' },
