@@ -40,7 +40,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
       <div class="max-w-3xl">
         <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#FF6B1A] uppercase mb-6">
           <span class="w-2 h-2 rounded-full bg-[#FF6B1A] animate-pulse"></span>
-          Son 1 ay · 11–22 Mayıs 2026 · 10 gün
+          11 Mayıs – 5 Haziran 2026 · 3 hafta · 15 gün
         </span>
         <h1 class="text-5xl md:text-7xl font-black leading-none mb-6" style="letter-spacing:-0.03em">
           Q ATAK<br />KAMPI
@@ -71,8 +71,8 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
             <p class="text-xs md:text-sm text-white/50 mt-1 leading-snug">Konu başlığı kritisite + frekansa göre puanlandı</p>
           </div>
           <div>
-            <p class="text-3xl md:text-4xl font-black text-white" style="letter-spacing:-0.02em">2 hafta</p>
-            <p class="text-xs md:text-sm text-white/50 mt-1 leading-snug">Yoğun kamp — TYT + AYT alterne işleniyor</p>
+            <p class="text-3xl md:text-4xl font-black text-white" style="letter-spacing:-0.02em">3 hafta</p>
+            <p class="text-xs md:text-sm text-white/50 mt-1 leading-snug">15 gün yoğun kamp — TYT + AYT alterne</p>
           </div>
         </div>
 
@@ -119,7 +119,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
             {[
               { num: '4',     label: 'Yıl',          desc: '2021–2024 ÖSYM soruları analizi' },
               { num: '186',   label: 'Başlık',       desc: 'Frekans + kritisite puanlandı' },
-              { num: '10',    label: 'Gün',          desc: '11–22 Mayıs · 2 hafta yoğun kamp' },
+              { num: '15',    label: 'Gün',          desc: '11 Mayıs – 5 Haziran · 3 hafta' },
               { num: '4+1',   label: 'Ders',         desc: 'MAT · FİZ · KİM · BİY · TÜR' },
             ].map(item => (
               <div class="bg-surface rounded-2xl border border-border p-6">
@@ -151,7 +151,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
       <div class="reveal mb-12 max-w-3xl">
         <SectionHeader
           eyebrow="Şubelerin Programı"
-          title="11–22 Mayıs 2026"
+          title="11 Mayıs – 5 Haziran 2026"
         />
         <!-- Sınav rozeti lejantı -->
         <div class="mt-6 flex flex-wrap items-center gap-3 text-xs">
@@ -170,6 +170,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
         {programlar.map((p, pi) => {
           const hafta1 = p.gunler.filter(g => g.hafta === 1);
           const hafta2 = p.gunler.filter(g => g.hafta === 2);
+          const hafta3 = p.gunler.filter(g => g.hafta === 3);
           const subeBilgi = SUBE_BILGI[p.sube];
           return (
             <div class="reveal flex flex-col rounded-2xl border border-border bg-white overflow-hidden" style={`transition-delay:${pi * 80}ms`}>
@@ -190,6 +191,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
               {[
                 { no: 1, etiket: 'Hafta 1 · 11–15 Mayıs', gunler: hafta1 },
                 { no: 2, etiket: 'Hafta 2 · 18–22 Mayıs', gunler: hafta2 },
+                { no: 3, etiket: 'Hafta 3 · 1–5 Haziran · sadece Matematik', gunler: hafta3 },
               ].map((h, hi) => (
                 <div>
                   <div class={`px-6 py-3 ${hi === 0 ? '' : 'border-t border-border'} bg-surface/60`}>
@@ -226,17 +228,6 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
                                       {s.ders}
                                     </span>
                                     <span class="block text-sm text-ink leading-snug">{s.konu}</span>
-                                    {s.paralelKonu && (
-                                      <div class="mt-1.5 pt-1.5 border-t border-dashed border-border flex items-start gap-2">
-                                        <span class={`shrink-0 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold ${sinavRozet[s.paralelSinav!]}`}>
-                                          {s.paralelSinav}
-                                        </span>
-                                        <div class="min-w-0 flex-1">
-                                          <span class="text-[10px] font-medium tracking-wider uppercase text-muted block leading-tight">paralel sınıf</span>
-                                          <span class="block text-sm text-ink leading-snug">{s.paralelKonu}</span>
-                                        </div>
-                                      </div>
-                                    )}
                                   </div>
                                 </div>
                               ) : (
@@ -268,7 +259,7 @@ const programlar: Program[] = [efelerProgrami, nazilliProgrami];
       </div>
 
       <p class="text-xs text-muted mt-6 text-center max-w-3xl mx-auto leading-relaxed">
-        * Matematik slotunda AYT ve TYT konuları paralel sınıflarda aynı anda işlenir — öğrenci isteğine göre seçer. Diğer dersler tek slot. Boş slotlar o gün ilgili dersin olmadığı saatlerdir.
+        * Her ders tek saat slotunda, AYT ve TYT konuları gün gün alterne işlenir. Hafta 3 (1–5 Haziran) artakalan Matematik konuları için ek hafta. Boş slotlar o gün ilgili dersin olmadığı saatlerdir.
       </p>
     </div>
   </section>
