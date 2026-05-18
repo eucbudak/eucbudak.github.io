@@ -63,8 +63,39 @@ const waUrl = wa('general');
         </div>
       </div>
 
-      <!-- Tablo (yatay kaydırılabilir, ilk sütun sabit) -->
-      <div class="reveal rounded-2xl border border-border bg-white overflow-hidden">
+      <!-- MOBİL: lokasyon kartları + 7'li gün ızgarası -->
+      <div class="reveal md:hidden flex flex-col gap-4">
+        {satirlar.map(s => (
+          <div class="rounded-2xl border border-border bg-white overflow-hidden">
+            <div class="bg-ink text-white px-5 py-3.5 flex items-baseline justify-between gap-3">
+              <span class="font-bold leading-tight">{s.ad}</span>
+              {s.altBaslik && (
+                <span class="text-[11px] font-mono text-white/60 shrink-0">{s.altBaslik}</span>
+              )}
+            </div>
+            <div class="grid grid-cols-7 gap-1.5 p-3">
+              {s.durum.map((d, i) => (
+                <div class={`flex flex-col items-center justify-center rounded-lg py-2 ${
+                  d === 'A'
+                    ? 'bg-emerald-500/10 ring-1 ring-emerald-500/30'
+                    : 'bg-red-500/10 ring-1 ring-red-200'
+                }`}>
+                  <span class={`text-sm font-black leading-none ${d === 'A' ? 'text-emerald-700' : 'text-red-600'}`}>{gunler[i].gun}</span>
+                  <span class="text-[9px] font-medium tracking-wide uppercase mt-0.5 text-muted">{gunler[i].hafta}</span>
+                  {d === 'A' ? (
+                    <svg class="mt-1 text-emerald-600" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Açık"><polyline points="20,6 9,17 4,12"/></svg>
+                  ) : (
+                    <svg class="mt-1 text-red-500" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Kapalı"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- MASAÜSTÜ: tablo (yatay kaydırılabilir, ilk sütun sabit) -->
+      <div class="reveal hidden md:block rounded-2xl border border-border bg-white overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full border-collapse text-sm">
             <thead>
