@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const TEL_DISPLAY = '0544 141 09 09';
+const TEL_HREF = 'tel:+905441410909';
+
+const dersler = [
+  { ad: 'Matematik',   adet: 6, renk: 'bg-red-500',     emoji: '➗' },
+  { ad: 'Fen Bilgisi', adet: 6, renk: 'bg-emerald-500', emoji: '🧪' },
+  { ad: 'İngilizce',   adet: 6, renk: 'bg-sky-500',     emoji: '💬' },
+  { ad: 'Türkçe',      adet: 4, renk: 'bg-blue-600',    emoji: '📖' },
+  { ad: 'İnkılap',     adet: 4, renk: 'bg-amber-500',   emoji: '🏛️' },
+];
+
+const guvenceler = [
+  { baslik: 'MEB onaylı öğretmen kadrosu', desc: 'Branşında deneyimli, resmî onaylı eğitmenler.' },
+  { baslik: 'Ayrı ortaokul ve lise binaları', desc: 'Yaş grubuna özel, odaklı çalışma ortamı.' },
+  { baslik: 'Her zaman ruhsatlı kurum', desc: 'Tüm izin ve ruhsatları tam, güvenilir kurum.' },
+  { baslik: 'Güvenli ve odaklı eğitim ortamı', desc: 'Veli olarak içiniz rahat; çocuğunuz emin ellerde.' },
+];
+---
+
+<Base
+  title="LGS Master Yaz Programı — Nazilli · Ücretsiz | KNT Akademi"
+  description="8. sınıfa geçecek öğrenciler için ücretsiz LGS Master Yaz Programı. 10–26 Haziran 2026, Nazilli. 52 saat ders, 20 saat soru çözümü, koçluk ve kütüphane. Kontenjan sınırlı — hemen kayıt."
+  image="/lgs-master.jpg"
+>
+
+  <!-- HERO -->
+  <section class="pt-32 md:pt-40 pb-16 bg-ink text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 15% 0%, rgba(155,0,48,0.30) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(56,189,248,0.12) 0%, transparent 50%);">
+    </div>
+    <div class="relative max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div class="reveal">
+          <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+            8. Sınıfa Geçecek Öğrencilere Özel · Nazilli
+          </span>
+          <h1 class="text-5xl md:text-7xl font-black leading-none mb-5" style="letter-spacing:-0.03em">
+            LGS Master<br /><span class="text-accent">Yaz Programı</span>
+          </h1>
+          <p class="text-lg md:text-xl text-white/75 leading-relaxed mb-4 max-w-xl">
+            Son LGS'ye en güçlü başlangıç. Nazilli'nin <strong class="text-white">en güvenilir kurumunda</strong>,
+            2 haftalık yoğun ve <strong class="text-accent">tamamen ücretsiz</strong> yaz programı.
+          </p>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60 mb-9">
+            <span class="inline-flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              Ders başı: <strong class="text-white">10 Haziran 2026</strong>
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              Bitiş: <strong class="text-white">26 Haziran 2026</strong>
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              2 hafta · yoğun
+            </span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-start gap-3">
+            <WhatsAppButton
+              ctx="lgs-master"
+              label="Hemen Ücretsiz Kayıt Ol"
+              class="text-base px-7 py-3.5"
+            />
+            <a href={TEL_HREF}
+              class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-7 py-3.5 rounded-full transition-colors text-base">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              {TEL_DISPLAY}
+            </a>
+          </div>
+          <p class="text-xs text-white/45 mt-4">Bilgi ve kayıt için arayın ya da WhatsApp'tan yazın · Kontenjan sınırlı.</p>
+        </div>
+
+        <!-- Afiş -->
+        <div class="reveal" style="transition-delay:120ms">
+          <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl bg-white/5">
+            <picture>
+              <source srcset="/lgs-master.webp" type="image/webp" />
+              <img src="/lgs-master.jpg"
+                alt="KNT Akademi LGS Master Yaz Programı — 8. sınıfa geçecek öğrencilere özel, ders başı 10 Haziran"
+                width="1080" height="1080" loading="eager"
+                class="w-full h-auto block" />
+            </picture>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROGRAM İÇERİĞİ -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+
+        <div class="reveal">
+          <SectionHeader
+            eyebrow="Program İçeriği"
+            title="2 haftada, 5 dersten yoğun hazırlık"
+            sub="Son LGS'ye giren öğrencilerin en çok zorlandığı konular; konu anlatımı + bol soru çözümü + birebir koçluk takibiyle işlenir."
+          />
+
+          <ul class="mt-8 flex flex-col gap-3">
+            {dersler.map(d => (
+              <li class="flex items-center gap-4 bg-surface rounded-xl border border-border px-5 py-4">
+                <span class={`w-10 h-10 rounded-xl ${d.renk} text-white flex items-center justify-center text-lg shrink-0`} aria-hidden="true">{d.emoji}</span>
+                <span class="font-bold text-ink flex-1">{d.ad}</span>
+                <span class="text-sm font-semibold text-muted">{d.adet} ders</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="reveal" style="transition-delay:100ms">
+          <div class="grid grid-cols-2 gap-4">
+            {[
+              { num: '52',  label: 'Saat Ders',        desc: '5 dersten yoğun konu anlatımı' },
+              { num: '20',  label: 'Saat Soru Çözümü', desc: 'LGS formatında bol pratik' },
+              { num: '2',   label: 'Hafta',            desc: '10 – 26 Haziran 2026' },
+              { num: '₺0',  label: 'Ücret',            desc: 'Program tamamen ücretsiz' },
+            ].map(item => (
+              <div class="bg-white rounded-2xl border border-border p-6">
+                <p class="text-3xl md:text-4xl font-black text-accent mb-2" style="letter-spacing:-0.02em">{item.num}</p>
+                <p class="font-bold text-ink text-sm mb-1">{item.label}</p>
+                <p class="text-xs text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-4 rounded-2xl border-2 border-dashed border-accent/30 bg-accent/5 p-6">
+            <p class="text-xs font-bold tracking-widest text-accent uppercase mb-3">Programa Dahil</p>
+            <ul class="flex flex-col gap-2.5 text-sm text-ink">
+              <li class="flex items-start gap-2"><span class="text-accent font-bold">→</span>52 saat ders + 20 saat soru çözümü</li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold">→</span>Bireysel koçluk ve takip</li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold">→</span>Kütüphane & çalışma alanı</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- GÜVEN — Nazilli'nin en güvenilir kurumu -->
+  <section class="py-20 md:py-24 bg-surface border-y border-border">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="reveal max-w-3xl mb-12">
+        <SectionHeader
+          eyebrow="Neden KNT Akademi?"
+          title="Nazilli'nin en güvenilir kurumu"
+          sub="Veli olarak çocuğunuzu emanet ederken içiniz rahat olsun diye; tüm güvencelerimizle yanınızdayız."
+        />
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        {guvenceler.map(g => (
+          <div class="reveal flex items-start gap-4 bg-white rounded-2xl border border-border p-6">
+            <span class="w-9 h-9 rounded-full bg-accent-soft text-accent flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9,12 11,14 15,10"/>
+              </svg>
+            </span>
+            <div>
+              <p class="font-bold text-ink mb-1">{g.baslik}</p>
+              <p class="text-sm text-muted leading-relaxed">{g.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KAPANIŞ CTA -->
+  <section class="bg-ink text-white py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 100%, rgba(155,0,48,0.28) 0%, transparent 60%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8 text-center flex flex-col items-center gap-6">
+      <span class="text-xs font-bold tracking-widest text-accent uppercase">Kontenjan Sınırlı · Ücretsiz</span>
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight" style="letter-spacing:-0.03em">
+        Çocuğunuzun LGS yazını<br />boşa harcamayın.
+      </h2>
+      <p class="text-base md:text-lg text-white/60 leading-relaxed max-w-xl">
+        LGS Master Yaz Programı Nazilli şubemizde, 10 Haziran'da başlıyor. Ücretsiz kayıt ve bilgi için
+        bize WhatsApp'tan yazın ya da telefonla ulaşın.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center gap-3 mt-2">
+        <WhatsAppButton
+          ctx="lgs-master"
+          label="WhatsApp'tan Ücretsiz Kayıt"
+          class="text-base px-8 py-4"
+        />
+        <a href={TEL_HREF}
+          class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-8 py-4 rounded-full transition-colors text-base">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          {TEL_DISPLAY}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
