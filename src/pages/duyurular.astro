@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { wa } from '../lib/whatsapp';
+import {
+  gunler,
+  satirlar,
+  TAKVIM_AY,
+  TAKVIM_ARALIK,
+} from '../data/duyurular';
+
+const waUrl = wa('general');
+---
+
+<Base
+  title="Duyurular — Mayıs Çalışma Takvimi | KNT Akademi"
+  description="KNT Akademi ve QWORK Mimar Sinan Mayıs 2026 çalışma takvimi. 18–31 Mayıs arası açık/kapalı günler ve resmî tatiller."
+>
+
+  <!-- HERO -->
+  <section class="pt-32 md:pt-40 pb-16 bg-ink text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 20% 0%, rgba(255,107,26,0.16) 0%, transparent 55%), radial-gradient(ellipse at 80% 100%, rgba(56,189,248,0.10) 0%, transparent 50%);">
+    </div>
+    <div class="relative max-w-6xl mx-auto px-6 md:px-8">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+          <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+          Duyurular
+        </span>
+        <h1 class="text-5xl md:text-7xl font-black leading-none mb-6" style="letter-spacing:-0.03em">
+          Mayıs Çalışma<br />Takvimi
+        </h1>
+        <p class="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl">
+          {TAKVIM_ARALIK} arası KNT Akademi şubeleri ve QWORK Mimar Sinan çalışma alanının
+          <strong class="text-white">açık / kapalı günleri</strong> ve resmî tatil bilgisi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TAKVİM -->
+  <section class="py-20 md:py-28 bg-surface border-y border-border">
+    <div class="max-w-7xl mx-auto px-6 md:px-8">
+
+      <div class="reveal mb-10 max-w-3xl">
+        <SectionHeader
+          eyebrow={TAKVIM_AY}
+          title={TAKVIM_ARALIK}
+          sub="Resmî tatil günlerinde tüm lokasyonlar kapalıdır. Detaylı bilgi için şubene danışabilirsin."
+        />
+        <!-- Lejant -->
+        <div class="mt-6 flex flex-wrap items-center gap-4 text-xs">
+          <span class="inline-flex items-center gap-2">
+            <span class="w-3.5 h-3.5 rounded bg-emerald-500/15 ring-1 ring-emerald-500/40"></span>
+            <span class="text-muted font-medium">Açık</span>
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <span class="w-3.5 h-3.5 rounded bg-red-500/10 ring-1 ring-red-300"></span>
+            <span class="text-muted font-medium">Resmî tatil · Kapalı</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Tablo (yatay kaydırılabilir, ilk sütun sabit) -->
+      <div class="reveal rounded-2xl border border-border bg-white overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
+            <thead>
+              <tr class="bg-ink text-white">
+                <th class="sticky left-0 z-10 bg-ink text-left font-bold px-5 py-4 min-w-[200px] tracking-tight">
+                  Lokasyon
+                </th>
+                {gunler.map(g => (
+                  <th class={`px-2 py-3 text-center font-semibold whitespace-nowrap min-w-[52px] ${g.haftaSonu ? 'text-white/45' : ''}`}>
+                    <span class="block text-base font-black leading-none">{g.gun}</span>
+                    <span class="block text-[10px] font-medium tracking-widest uppercase mt-1 text-white/55">{g.hafta}</span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {satirlar.map(s => (
+                <tr class="group">
+                  <th scope="row" class="sticky left-0 z-10 bg-white group-hover:bg-surface/70 text-left px-5 py-4 min-w-[200px] transition-colors">
+                    <span class="block font-bold text-ink leading-tight">{s.ad}</span>
+                    {s.altBaslik && (
+                      <span class="block text-[11px] font-mono text-muted mt-0.5">{s.altBaslik}</span>
+                    )}
+                  </th>
+                  {s.durum.map((d, i) => (
+                    d === 'A' ? (
+                      <td class={`px-2 py-4 text-center ${gunler[i].haftaSonu ? 'bg-emerald-500/[0.06]' : ''}`}>
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/15 ring-1 ring-emerald-500/40 text-emerald-600" title="Açık" aria-label="Açık">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="20,6 9,17 4,12"/>
+                          </svg>
+                        </span>
+                      </td>
+                    ) : (
+                      <td class="px-2 py-4 text-center bg-red-500/[0.05]" title="Resmî tatil · Kapalı" aria-label="Kapalı">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-500/10 ring-1 ring-red-300 text-red-500">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                          </svg>
+                        </span>
+                      </td>
+                    )
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="text-xs text-muted mt-5 leading-relaxed max-w-3xl">
+        * 19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı resmî tatildir. Bayram dönemi
+        kapalılık günleri lokasyona göre değişebilir; güncel durum için ilgili şube ile iletişime geçiniz.
+      </p>
+
+      <div class="mt-10">
+        <a href={waUrl} target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white text-sm font-semibold px-6 py-3 rounded-full transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Sorularınız için WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Base>
