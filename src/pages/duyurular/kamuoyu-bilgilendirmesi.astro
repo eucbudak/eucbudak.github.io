@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const TARIH = '21 Mayıs 2026';
+
+// Velilere yönelik resmî duyuru metni (kaynak: veli bilgilendirme.docx, 21.05.2026)
+const paragraflar: string[] = [
+  'Bildiğiniz üzere eğitim, güven üzerine kurulu bir ilişkidir. Bu güveni korumak adına sizleri son dönemde yaşanan bazı gelişmeler hakkında doğrudan bilgilendirmek istiyoruz.',
+  'Nazilli\'de faaliyet gösteren bazı kurumlar hakkında ilgili mercilere yapılan resmi başvurular sonucunda yürütülen denetimlerde; ruhsatsız eğitim faaliyeti, devlet okullarında görevli öğretmenlerin kaçak çalıştırılması, SGK kaydı ve Valilik onayı bulunmayan personelle ders verilmesi, ruhsat kapsamı dışında ortaokul öğrencisi kabul edilmesi ve devlet okulu öğrencilerinin usulsüz biçimde kurslara yönlendirilmesi gibi fiiller sübuta ermiş; söz konusu kurumlara idari yaptırımlar uygulanmış, kaçak çalıştırılan öğretmenler ise görev yaptıkları okullardan uzaklaştırılmıştır.',
+  'Bilinmelidir ki; görev yaptığı devlet okulunun ardından, yasaya aykırı biçimde kurslarda kaçak olarak ders veren her öğretmen; aslında ekmeğini yalnızca özel öğretim kurumlarından kazanan, emeğinin karşılığını dürüstçe bu alanda arayan özel öğretim kurumu çalışanlarının emek hırsızıdır. Bu durum, yalnızca mevzuata aykırı bir fiil değil; aynı zamanda eğitim ahlakına ve öğretmenlik mesleğinin onuruna doğrudan bir saygısızlıktır.',
+  'Maalesef bu süreçte bazı kişilerin; velilerimizi, öğrencilerimizi ve öğretmenlerimizi arayarak kurumumuz hakkında "kapanıyor", "battı", "kalitesiz" gibi gerçek dışı beyanlarda bulunduğu, hatta kurucularımıza yönelik tehdit içeren ifadeler kullanıldığı tarafımıza ulaşmıştır. Bu beyanların hiçbiri gerçeği yansıtmamakta olup, ilgili kişiler hakkında hukuki süreçler başlatılmıştır.',
+  'Öğrencilerimizi arayarak kendilerini kurs merkezi çalışanı veya sahibi olarak tanıtan, eğitimciye yakışmayacak söylem ve davranışlarda bulunan kişilere lütfen itibar etmeyiniz. Kuantum olarak Aydın ilindeki başarılarımız ortadadır; öğretmen emeğini ve öğrenci hakkını çalmaya çalışanlara karşı duruşumuz ise her zaman aynı olacaktır.',
+  'KNT Akademi; ruhsatlı kadrosu, mevzuata tam uyumlu işleyişi ve şeffaf yapısıyla Nazilli\'deki faaliyetlerine her zamankinden daha güçlü şekilde devam etmektedir. Bu tür girişimler bizi yolumuzdan döndürmemekte; aksine öğrencilerimize daha nitelikli bir eğitim sunma motivasyonumuzu artırmaktadır.',
+  'Bu süreçte gösterdiğiniz güven için içtenlikle teşekkür ediyor; aklınıza takılan her konuda doğrudan kurumumuzla iletişime geçmenizi rica ediyoruz.',
+];
+---
+
+<Base
+  title="Kamuoyu Bilgilendirmesi — KNT Akademi Nazilli"
+  description="KNT Akademi Nazilli'den velilerimize ve kamuoyuna resmî bilgilendirme. 21 Mayıs 2026."
+>
+  <!-- ANNOUNCEMENT — siyah zemin / beyaz yazı -->
+  <article class="bg-ink text-white min-h-screen pt-32 md:pt-40 pb-24 relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% -10%, rgba(155,0,48,0.22) 0%, transparent 55%);">
+    </div>
+
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8">
+
+      <a href="/duyurular/" class="inline-flex items-center gap-1.5 text-xs font-medium tracking-widest uppercase text-white/40 hover:text-white transition-colors mb-10">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/>
+        </svg>
+        Tüm Duyurular
+      </a>
+
+      <header class="mb-12 border-b border-white/15 pb-10">
+        <p class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          Duyuru · {TARIH}
+        </p>
+        <h1 class="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5" style="letter-spacing:-0.02em">
+          KAMUOYU<br />BİLGİLENDİRMESİ
+        </h1>
+        <p class="text-base md:text-lg text-white/60">KNT Akademi Nazilli'den velilerimize ve kamuoyuna.</p>
+      </header>
+
+      <p class="text-lg md:text-xl font-semibold text-white mb-8">Değerli Velimiz,</p>
+
+      <div class="flex flex-col gap-6 text-[15px] md:text-[17px] leading-[1.85] text-white/85">
+        {paragraflar.map(p => (
+          <p set:html={p}></p>
+        ))}
+      </div>
+
+      <!-- İmza -->
+      <div class="mt-14 pt-8 border-t border-white/15">
+        <p class="text-sm md:text-base text-white/55 leading-relaxed">
+          Saygılarımızla,
+        </p>
+        <p class="text-lg md:text-xl font-bold text-white mt-1">KNT Akademi Nazilli</p>
+      </div>
+
+      <!-- İletişim mini-CTA (resmî, yumuşak) -->
+      <div class="mt-12 rounded-2xl border border-white/15 bg-white/[0.03] p-6 md:p-7">
+        <p class="text-xs font-bold tracking-widest text-white/40 uppercase mb-2">Doğrudan iletişim</p>
+        <p class="text-sm md:text-base text-white/75 leading-relaxed mb-4">
+          Aklınıza takılan her konuda kurumumuzla doğrudan iletişime geçmekten lütfen çekinmeyin.
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="tel:+905441410909"
+            class="inline-flex items-center gap-2 border border-white/25 hover:border-white/55 hover:bg-white/5 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            0544 141 09 09
+          </a>
+          <a href="/iletisim/"
+            class="inline-flex items-center gap-2 text-sm font-medium text-white/55 hover:text-white transition-colors px-2 py-2.5">
+            İletişim sayfası →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </article>
+</Base>
