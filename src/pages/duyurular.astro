@@ -1,199 +1,306 @@
 ---
 import Base from '../layouts/Base.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { wa } from '../lib/whatsapp';
-import {
-  gunler,
-  satirlar,
-  TAKVIM_AY,
-  TAKVIM_ARALIK,
-} from '../data/duyurular';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 
-const waUrl = wa('general');
+const TEL_DISPLAY = '0532 131 44 09';
+const TEL_HREF = 'tel:+905321314409';
+
+// Ders dağılımı (toplam 24 saat/hafta)
+const dersler = [
+  { ad: 'Matematik', saat: 12, renk: 'bg-blue-600',    emoji: '➗' },
+  { ad: 'Fizik',     saat: 4,  renk: 'bg-violet-500',  emoji: '⚛️' },
+  { ad: 'Kimya',     saat: 4,  renk: 'bg-emerald-500', emoji: '🧪' },
+  { ad: 'Biyoloji',  saat: 4,  renk: 'bg-rose-500',    emoji: '🧬' },
+];
+
+// Program takvimi
+const donemler = [
+  { aralik: '29 Haziran – 16 Temmuz', tip: 'DERS',  icon: '📖' },
+  { aralik: '20 – 26 Temmuz',         tip: 'TATİL', icon: '🌴' },
+  { aralik: '27 Temmuz – 14 Ağustos', tip: 'DERS',  icon: '📖' },
+];
+
+// Sınav takvimi
+const sinavlar = [
+  { gun: '28', ay: 'Haziran', ad: 'TYT Hazır Bulunuşluk Sınavı', saat: '16:00' },
+  { gun: '17', ay: 'Temmuz',  ad: 'TYT KTS',                     saat: '16:00' },
+  { gun: '13', ay: 'Ağustos', ad: 'TYT KTS',                     saat: '16:00' },
+];
+
+// Değerler
+const degerler = [
+  { ad: 'Disiplinli Çalışma', emoji: '👥' },
+  { ad: 'Doğru Plan',         emoji: '🎯' },
+  { ad: 'İstikrarlı Tekrar',  emoji: '📈' },
+  { ad: 'Düzenli Sınav Takibi', emoji: '🏆' },
+];
+
+const gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe'];
 ---
 
 <Base
-  title="Duyurular — Mayıs Çalışma Takvimi | KNT Akademi"
-  description="KNT Akademi ve QWORK Mimar Sinan Mayıs 2026 çalışma takvimi. 18–31 Mayıs arası açık/kapalı günler ve resmî tatiller."
+  title="Duyurular — TYT Master Yaz Programı | KNT Akademi"
+  description="TYT Master Yaz Programı KNT Akademi Efeler ve Nazilli'de başlıyor. 6 hafta, haftada 24 saat TYT odaklı hazırlık. 29 Haziran – 14 Ağustos 2026. Hemen ön kayıt oluşturun."
 >
 
   <!-- HERO -->
   <section class="pt-32 md:pt-40 pb-16 bg-ink text-white relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
-      style="background: radial-gradient(ellipse at 20% 0%, rgba(255,107,26,0.16) 0%, transparent 55%), radial-gradient(ellipse at 80% 100%, rgba(56,189,248,0.10) 0%, transparent 50%);">
+      style="background: radial-gradient(ellipse at 15% 0%, rgba(155,0,48,0.32) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(56,189,248,0.12) 0%, transparent 50%);">
     </div>
     <div class="relative max-w-6xl mx-auto px-6 md:px-8">
       <div class="max-w-3xl">
         <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-          Duyurular
+          Duyurular · Yeni Program
         </span>
-        <h1 class="text-5xl md:text-7xl font-black leading-none mb-6" style="letter-spacing:-0.03em">
-          Duyurular
+        <p class="text-sm font-bold tracking-[0.2em] text-white/60 uppercase mb-3">Hedefimiz net: TYT'de zirve!</p>
+        <h1 class="text-5xl md:text-7xl font-black leading-none mb-5" style="letter-spacing:-0.03em">
+          TYT Master<br /><span class="text-accent">Yaz Programı</span>
         </h1>
-        <p class="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl">
-          KNT Akademi'den velilerimize ve öğrencilerimize yönelik resmî açıklamalar ve çalışma takvimi.
+        <p class="text-lg md:text-xl text-white/75 leading-relaxed mb-8 max-w-xl">
+          İşte başlıyoruz! TYT'ye en güçlü yaz başlangıcı — KNT Akademi <strong class="text-white">Efeler</strong> ve
+          <strong class="text-white">Nazilli</strong> şubelerinde, 6 hafta boyunca yoğun ve TYT odaklı hazırlık.
         </p>
-      </div>
-    </div>
-  </section>
 
-
-  <!-- ÖNE ÇIKAN DUYURU -->
-  <section class="py-14 md:py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6 md:px-8">
-      <a href="/duyurular/kamuoyu-bilgilendirmesi/"
-        class="reveal group block rounded-3xl bg-ink text-white p-8 md:p-12 hover:shadow-2xl transition-shadow relative overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
-          style="background: radial-gradient(ellipse at 100% 0%, rgba(155,0,48,0.30) 0%, transparent 55%);">
+        <!-- Hızlı bilgiler -->
+        <div class="flex flex-wrap gap-3 mb-9">
+          {[
+            { ust: '6', alt: 'Hafta', icon: '📅' },
+            { ust: '24', alt: 'Saat / Hafta', icon: '⏱' },
+            { ust: 'TYT', alt: 'Odaklı', icon: '🎯' },
+          ].map(b => (
+            <div class="inline-flex items-center gap-3 rounded-2xl bg-white/[0.06] ring-1 ring-white/10 px-5 py-3">
+              <span class="text-xl" aria-hidden="true">{b.icon}</span>
+              <span>
+                <span class="block text-lg font-black leading-none text-white">{b.ust}</span>
+                <span class="block text-[11px] font-medium tracking-wide uppercase text-white/55 mt-0.5">{b.alt}</span>
+              </span>
+            </div>
+          ))}
         </div>
-        <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div class="max-w-2xl">
-            <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-4">
-              <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-              Yeni Duyuru · 21 Mayıs 2026
-            </span>
-            <h2 class="text-3xl md:text-5xl font-black leading-tight mb-3" style="letter-spacing:-0.02em">
-              Kamuoyu Bilgilendirmesi
-            </h2>
-            <p class="text-sm md:text-base text-white/65 leading-relaxed">
-              KNT Akademi Nazilli'den velilerimize ve kamuoyuna; son dönemde Nazilli'de yürütülen denetimler ve
-              kurumumuza yönelik gerçek dışı beyanlar hakkında resmî açıklama.
-            </p>
-          </div>
-          <span class="inline-flex items-center gap-2 text-sm font-semibold text-white shrink-0 group-hover:gap-3 transition-all">
-            Tamamını oku
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>
+
+        <div class="flex flex-col sm:flex-row items-start gap-3">
+          <WhatsAppButton ctx="tyt-master" label="Hemen Ön Kayıt Oluştur" class="text-base px-7 py-3.5" />
+          <a href={TEL_HREF}
+            class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-7 py-3.5 rounded-full transition-colors text-base">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
             </svg>
-          </span>
+            {TEL_DISPLAY}
+          </a>
         </div>
-      </a>
+      </div>
     </div>
   </section>
 
 
-  <!-- TAKVİM -->
-  <section class="py-20 md:py-28 bg-surface border-y border-border">
-    <div class="max-w-7xl mx-auto px-6 md:px-8">
+  <!-- DERS SAATLERİ · DERS DAĞILIMI · PROGRAM DÖNEMLERİ -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid md:grid-cols-3 gap-6">
 
-      <div class="reveal mb-10 max-w-3xl">
-        <SectionHeader
-          eyebrow={TAKVIM_AY}
-          title={TAKVIM_ARALIK}
-          sub="Resmî tatil günlerinde tüm lokasyonlar kapalıdır. Detaylı bilgi için şubene danışabilirsin."
-        />
-        <!-- Lejant -->
-        <div class="mt-6 flex flex-wrap items-center gap-4 text-xs">
-          <span class="inline-flex items-center gap-2">
-            <span class="w-3.5 h-3.5 rounded bg-emerald-500/15 ring-1 ring-emerald-500/40"></span>
-            <span class="text-muted font-medium">Açık</span>
-          </span>
-          <span class="inline-flex items-center gap-2">
-            <span class="w-3.5 h-3.5 rounded bg-red-500/10 ring-1 ring-red-300"></span>
-            <span class="text-muted font-medium">Resmî tatil · Kapalı</span>
-          </span>
+        <!-- Ders saatleri -->
+        <div class="reveal rounded-3xl border border-border bg-surface p-7">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-9 h-9 rounded-xl bg-accent text-white flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 16,14"/></svg>
+            </span>
+            <h3 class="text-lg font-black text-ink tracking-tight">Ders Saatleri</h3>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <p class="text-xs font-semibold tracking-wide uppercase text-muted mb-1">Günlük ders başı</p>
+              <p class="text-2xl font-black text-ink">10:00 – 15:40</p>
+            </div>
+            <div class="h-px bg-border"></div>
+            <div>
+              <p class="text-xs font-semibold tracking-wide uppercase text-muted mb-1">Soru çözüm</p>
+              <p class="text-2xl font-black text-ink">15:50 – 17:20</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted leading-relaxed mt-5">
+            Program haftada 4 gün (Pazartesi, Salı, Çarşamba, Perşembe) uygulanmaktadır.
+          </p>
         </div>
-      </div>
 
-      <!-- MOBİL: lokasyon kartları + 7'li gün ızgarası -->
-      <div class="reveal md:hidden flex flex-col gap-4">
-        {satirlar.map(s => (
-          <div class="rounded-2xl border border-border bg-white overflow-hidden">
-            <div class="bg-ink text-white px-5 py-3.5 flex items-baseline justify-between gap-3">
-              <span class="font-bold leading-tight">{s.ad}</span>
-              {s.altBaslik && (
-                <span class="text-[11px] font-mono text-white/60 shrink-0">{s.altBaslik}</span>
-              )}
-            </div>
-            <div class="grid grid-cols-7 gap-1.5 p-3">
-              {s.durum.map((d, i) => (
-                <div class={`flex flex-col items-center justify-center rounded-lg py-2 ${
-                  d === 'A'
-                    ? 'bg-emerald-500/10 ring-1 ring-emerald-500/30'
-                    : 'bg-red-500/10 ring-1 ring-red-200'
-                }`}>
-                  <span class={`text-sm font-black leading-none ${d === 'A' ? 'text-emerald-700' : 'text-red-600'}`}>{gunler[i].gun}</span>
-                  <span class="text-[9px] font-medium tracking-wide uppercase mt-0.5 text-muted">{gunler[i].hafta}</span>
-                  {d === 'A' ? (
-                    <svg class="mt-1 text-emerald-600" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Açık"><polyline points="20,6 9,17 4,12"/></svg>
-                  ) : (
-                    <svg class="mt-1 text-red-500" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Kapalı"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  )}
+        <!-- Ders dağılımı -->
+        <div class="reveal rounded-3xl border border-border bg-surface p-7" style="transition-delay:80ms">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-9 h-9 rounded-xl bg-accent text-white flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <h3 class="text-lg font-black text-ink tracking-tight">Ders Dağılımı</h3>
+          </div>
+          <ul class="space-y-2.5">
+            {dersler.map(d => (
+              <li class="flex items-center gap-3">
+                <span class={`w-8 h-8 rounded-lg ${d.renk} text-white flex items-center justify-center text-sm shrink-0`} aria-hidden="true">{d.emoji}</span>
+                <span class="font-bold text-ink flex-1">{d.ad}</span>
+                <span class="text-sm font-black text-muted tabular-nums">{d.saat} saat</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-5 rounded-xl bg-ink text-white text-center py-3">
+            <span class="text-sm font-bold">Toplam: <span class="text-accent">24 saat / hafta</span></span>
+          </div>
+        </div>
+
+        <!-- Program dönemleri -->
+        <div class="reveal rounded-3xl border border-border bg-surface p-7" style="transition-delay:160ms">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-9 h-9 rounded-xl bg-accent text-white flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <h3 class="text-lg font-black text-ink tracking-tight">Program Dönemleri</h3>
+          </div>
+          <ul class="space-y-3">
+            {donemler.map(d => (
+              <li class="flex items-center gap-3">
+                <span class="text-xl" aria-hidden="true">{d.icon}</span>
+                <div>
+                  <p class="text-sm font-bold text-ink leading-tight">{d.aralik}</p>
+                  <p class={`text-xs font-black tracking-widest uppercase mt-0.5 ${d.tip === 'TATİL' ? 'text-muted' : 'text-accent'}`}>{d.tip}</p>
                 </div>
-              ))}
-            </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROGRAM TAKVİMİ (timeline) -->
+  <section class="py-16 md:py-20 bg-surface border-y border-border">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="reveal mb-10 text-center">
+        <SectionHeader eyebrow="Program Takvimi" title="6 haftalık yol haritası" center />
+      </div>
+      <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+        {donemler.map(d => (
+          <div class={`rounded-2xl p-6 text-center border ${
+            d.tip === 'TATİL'
+              ? 'bg-white border-dashed border-border'
+              : 'bg-ink text-white border-ink'
+          }`}>
+            <p class="text-3xl mb-2" aria-hidden="true">{d.icon}</p>
+            <p class={`text-sm font-bold mb-2 ${d.tip === 'TATİL' ? 'text-ink' : 'text-white'}`}>{d.aralik}</p>
+            <span class={`inline-block text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full ${
+              d.tip === 'TATİL' ? 'bg-surface text-muted' : 'bg-accent text-white'
+            }`}>{d.tip}</span>
           </div>
         ))}
       </div>
+    </div>
+  </section>
 
-      <!-- MASAÜSTÜ: tablo (yatay kaydırılabilir, ilk sütun sabit) -->
-      <div class="reveal hidden md:block rounded-2xl border border-border bg-white overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full border-collapse text-sm">
-            <thead>
-              <tr class="bg-ink text-white">
-                <th class="sticky left-0 z-10 bg-ink text-left font-bold px-5 py-4 min-w-[200px] tracking-tight">
-                  Lokasyon
-                </th>
-                {gunler.map(g => (
-                  <th class={`px-2 py-3 text-center font-semibold whitespace-nowrap min-w-[52px] ${g.haftaSonu ? 'text-white/45' : ''}`}>
-                    <span class="block text-base font-black leading-none">{g.gun}</span>
-                    <span class="block text-[10px] font-medium tracking-widest uppercase mt-1 text-white/55">{g.hafta}</span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-border">
-              {satirlar.map(s => (
-                <tr class="group">
-                  <th scope="row" class="sticky left-0 z-10 bg-white group-hover:bg-surface/70 text-left px-5 py-4 min-w-[200px] transition-colors">
-                    <span class="block font-bold text-ink leading-tight">{s.ad}</span>
-                    {s.altBaslik && (
-                      <span class="block text-[11px] font-mono text-muted mt-0.5">{s.altBaslik}</span>
-                    )}
-                  </th>
-                  {s.durum.map((d, i) => (
-                    d === 'A' ? (
-                      <td class={`px-2 py-4 text-center ${gunler[i].haftaSonu ? 'bg-emerald-500/[0.06]' : ''}`}>
-                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/15 ring-1 ring-emerald-500/40 text-emerald-600" title="Açık" aria-label="Açık">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polyline points="20,6 9,17 4,12"/>
-                          </svg>
-                        </span>
-                      </td>
-                    ) : (
-                      <td class="px-2 py-4 text-center bg-red-500/[0.05]" title="Resmî tatil · Kapalı" aria-label="Kapalı">
-                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-500/10 ring-1 ring-red-300 text-red-500">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                          </svg>
-                        </span>
-                      </td>
-                    )
-                  ))}
-                </tr>
+
+  <!-- HAFTALIK PLAN + SINAV TAKVİMİ -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+
+        <!-- Haftalık plan -->
+        <div class="reveal">
+          <SectionHeader eyebrow="Haftalık Plan" title="Haftada 4 gün" />
+          <div class="mt-6 rounded-3xl border border-border overflow-hidden">
+            <div class="grid grid-cols-4 bg-ink text-white">
+              {gunler.map(g => (
+                <div class="px-2 py-3.5 text-center text-xs font-bold tracking-wide">{g}</div>
               ))}
-            </tbody>
-          </table>
+            </div>
+            <div class="divide-y divide-border">
+              <div class="flex items-center gap-4 px-5 py-4 bg-surface">
+                <span class="inline-flex items-center justify-center rounded-lg bg-accent text-white text-xs font-black px-3 py-1.5 shrink-0 tabular-nums">10:00 – 15:40</span>
+                <span class="font-bold text-ink">Ders <span class="font-medium text-muted">(Konu Anlatımı)</span></span>
+              </div>
+              <div class="flex items-center gap-4 px-5 py-4">
+                <span class="inline-flex items-center justify-center rounded-lg bg-ink text-white text-xs font-black px-3 py-1.5 shrink-0 tabular-nums">15:50 – 17:20</span>
+                <span class="font-bold text-ink">Soru Çözüm</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Sınav takvimi -->
+        <div class="reveal" style="transition-delay:100ms">
+          <SectionHeader eyebrow="Sınav Takvimi" title="Düzenli ölçme" />
+          <ul class="mt-6 space-y-3">
+            {sinavlar.map(s => (
+              <li class="flex items-center gap-5 rounded-2xl border border-border bg-surface px-5 py-4">
+                <div class="flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-accent text-white shrink-0">
+                  <span class="text-2xl font-black leading-none">{s.gun}</span>
+                  <span class="text-[10px] font-bold tracking-wide uppercase mt-0.5">{s.ay}</span>
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold text-ink leading-tight">{s.ad}</p>
+                  <p class="text-sm font-semibold text-accent mt-1 inline-flex items-center gap-1.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 16,14"/></svg>
+                    {s.saat}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
       </div>
+    </div>
+  </section>
 
-      <p class="text-xs text-muted mt-5 leading-relaxed max-w-3xl">
-        * 19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı resmî tatildir. Bayram dönemi
-        kapalılık günleri lokasyona göre değişebilir; güncel durum için ilgili şube ile iletişime geçiniz.
+
+  <!-- DEĞERLER -->
+  <section class="py-14 md:py-16 bg-surface border-y border-border">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {degerler.map(d => (
+          <div class="reveal flex flex-col items-center text-center gap-2 rounded-2xl bg-white border border-border p-5">
+            <span class="text-2xl" aria-hidden="true">{d.emoji}</span>
+            <span class="text-sm font-bold text-ink leading-tight">{d.ad}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KAPANIŞ CTA -->
+  <section class="bg-ink text-white py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 100%, rgba(155,0,48,0.28) 0%, transparent 60%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8 text-center flex flex-col items-center gap-6">
+      <span class="text-xs font-bold tracking-widest text-accent uppercase">Kontenjan Sınırlı · Ön Kayıt</span>
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight" style="letter-spacing:-0.03em">
+        TYT'de hedefin<br />zirve olsun!
+      </h2>
+      <p class="text-base md:text-lg text-white/60 leading-relaxed max-w-xl">
+        TYT Master Yaz Programı 29 Haziran'da Efeler ve Nazilli şubelerimizde başlıyor.
+        Bilgi ve ön kayıt için WhatsApp'tan yazın ya da telefonla ulaşın.
       </p>
-
-      <div class="mt-10">
-        <a href={waUrl} target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white text-sm font-semibold px-6 py-3 rounded-full transition-colors">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      <div class="flex flex-col sm:flex-row items-center gap-3 mt-2">
+        <WhatsAppButton ctx="tyt-master" label="WhatsApp'tan Ön Kayıt" class="text-base px-8 py-4" />
+        <a href={TEL_HREF}
+          class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-8 py-4 rounded-full transition-colors text-base">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
           </svg>
-          Sorularınız için WhatsApp
+          {TEL_DISPLAY}
         </a>
       </div>
-
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm text-white/50 mt-2">
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          KNT Akademi Efeler
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          KNT Akademi Nazilli
+        </span>
+      </div>
     </div>
   </section>
 </Base>
