@@ -10,8 +10,11 @@ const MESSAGES = {
   calisanlar:'Merhaba, Çalışanlar Kulübü hakkında bilgi almak istiyorum.',
   focus:     'Merhaba, FOCUS modeliniz hakkında bilgi almak istiyorum.',
   iletisim:  'Merhaba, KNT Akademi hakkında bilgi almak istiyorum.',
+  'q-atak':  'Merhaba, Q ATAK KAMPI hakkında bilgi almak istiyorum.',
   'lgs-master': 'Merhaba, LGS Master Yaz Programı hakkında bilgi almak ve ücretsiz kayıt yaptırmak istiyorum. (8. sınıfa geçecek öğrenci için)',
   'tyt-master': 'Merhaba, TYT Master Yaz Programı hakkında bilgi almak ve ön kayıt oluşturmak istiyorum.',
+  'ortaokul':   'Merhaba, Ödev ve Çalışma Kulübü hakkında bilgi almak ve kayıt yaptırmak istiyorum. (5-6-7. sınıf)',
+  'ortaokul-8': 'Merhaba, 8. sınıf Özel Ders Kulübü hakkında bilgi almak istiyorum.',
 } as const;
 
 export type WaContext = keyof typeof MESSAGES;

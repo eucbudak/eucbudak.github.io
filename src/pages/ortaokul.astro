@@ -1,0 +1,433 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const TEL_DISPLAY = '0532 131 44 09';
+const TEL_HREF = 'tel:+905321314409';
+
+// Google Maps bağlantıları — İsabey Ortaokulu'ndan kuruma yürüyüş tarifi.
+const MAPS_KONUM = 'https://www.google.com/maps/search/?api=1&query=KNT+Akademi+%C3%96zel+%C3%96%C4%9Fretim+Kursu+Efeler+Ayd%C4%B1n';
+const MAPS_TARIF  = 'https://www.google.com/maps/dir/?api=1&origin=%C4%B0sabey+Ortaokulu+Efeler+Ayd%C4%B1n&destination=KNT+Akademi+%C3%96zel+%C3%96%C4%9Fretim+Kursu+Efeler+Ayd%C4%B1n&travelmode=walking';
+
+// ——— DÜZENLENEBİLİR: Etüt saatleri ———
+// Okulu sabah olan öğrenci öğleden sonra, öğleden sonra olan öğrenci sabah gelir.
+const gruplar = [
+  {
+    ad: 'Sabahçı Grup',
+    okul: 'Okulu sabah olan öğrenciler',
+    saat: '13:30 – 17:30',
+    detay: 'Okul çıkışında doğrudan kuruma gelir; öğle yemeğini bizde yer, ardından etüde başlar.',
+    emoji: '🌤️',
+  },
+  {
+    ad: 'Öğleci Grup',
+    okul: 'Okulu öğleden sonra olan öğrenciler',
+    saat: '09:00 – 12:30',
+    detay: 'Sabah etüdünü tamamlar, öğle yemeğini bizde yer ve okula öyle gider.',
+    emoji: '🌅',
+  },
+];
+
+const dersler = [
+  { ad: 'Türkçe',         renk: 'bg-blue-600',    emoji: '📖' },
+  { ad: 'Matematik',      renk: 'bg-orange-500',  emoji: '➗' },
+  { ad: 'Fen Bilimleri',  renk: 'bg-emerald-500', emoji: '🧪' },
+  { ad: 'Sosyal Bilgiler',renk: 'bg-violet-500',  emoji: '🏛️' },
+  { ad: 'İngilizce',      renk: 'bg-sky-500',     emoji: '💬' },
+];
+
+const kulupte = [
+  { baslik: 'Ödevler kurumda biter',   desc: 'Öğrenci eve ödevle dönmez. Günün ödevi öğretmen gözetiminde, doğru yöntemle tamamlanır.' },
+  { baslik: 'Maarif Modeli uyumlu',    desc: 'Çalışmalar okulun müfredatı ve Maarif Modeli kazanımlarıyla birebir örtüşür.' },
+  { baslik: 'Anlamadığı yerde yanında bir öğretmen', desc: 'Takıldığı soruyu ertesi güne bırakmaz; o anda sorar, o anda öğrenir.' },
+  { baslik: 'Düzenli çalışma alışkanlığı', desc: 'Her gün aynı saatte, aynı düzende çalışmak; ortaokulda kazanılacak en değerli alışkanlık.' },
+  { baslik: 'Sessiz ve odaklı etüt salonu', desc: 'Telefonsuz, dikkat dağıtmayan, çalışmaya ayrılmış bir ortam.' },
+  { baslik: 'Veliye düzenli geri bildirim', desc: 'Öğrencinin devamı, ödev takibi ve gelişimi hakkında düzenli bilgilendirme.' },
+];
+
+const guvenceler = [
+  { baslik: 'MEB onaylı öğretmen kadrosu', desc: 'Branşında deneyimli, resmî onaylı eğitmenler.' },
+  { baslik: 'Ayrı ortaokul ve lise binaları', desc: 'Yaş grubuna özel, odaklı çalışma ortamı.' },
+  { baslik: 'Her zaman ruhsatlı kurum', desc: 'Tüm izin ve ruhsatları tam, güvenilir kurum.' },
+  { baslik: 'Güvenli ve odaklı eğitim ortamı', desc: 'Veli olarak içiniz rahat; çocuğunuz emin ellerde.' },
+];
+---
+
+<Base
+  title="Ödev ve Çalışma Kulübü — 5-6-7. Sınıflar · Efeler | KNT Akademi"
+  description="İsabey Ortaokulu'nun hemen güneyinde, yürüme mesafesinde. 5-6-7. sınıflar için hafta içi her gün ödev ve çalışma kulübü; öğle yemeği hizmeti dahil, Maarif Modeli uyumlu çalışmalar. Kayıtlar başladı."
+  image="/ortaokul-odev-kulubu.jpeg"
+>
+
+  <!-- HERO -->
+  <section class="pt-32 md:pt-40 pb-16 bg-ink text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 15% 0%, rgba(155,0,48,0.30) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(251,191,36,0.12) 0%, transparent 50%);">
+    </div>
+    <div class="relative max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div class="reveal">
+          <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+            İsabey Ortaokulu'nun hemen güneyi · Efeler
+          </span>
+          <h1 class="text-5xl md:text-7xl font-black leading-none mb-5" style="letter-spacing:-0.03em">
+            Ödev ve<br /><span class="text-accent">Çalışma Kulübü</span>
+          </h1>
+          <p class="text-lg md:text-xl text-white/75 leading-relaxed mb-6 max-w-xl">
+            5, 6 ve 7. sınıflar için hafta içi her gün. Çocuğunuz ödevini
+            <strong class="text-white">öğretmen gözetiminde kurumda bitirir</strong>,
+            <strong class="text-accent">öğle yemeğini bizde yer</strong>, eve dinlenmiş olarak döner.
+          </p>
+
+          <div class="flex flex-wrap gap-2.5 mb-9">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-sm font-semibold">
+              🍽️ Öğle yemeği hizmeti
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-sm font-semibold">
+              📅 Hafta içi her gün
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-sm font-semibold">
+              📘 Maarif Modeli uyumlu
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-sm font-semibold">
+              🚶 Okula yürüme mesafesi
+            </span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-start gap-3">
+            <WhatsAppButton
+              ctx="ortaokul"
+              label="Hemen Kayıt Ol"
+              class="text-base px-7 py-3.5"
+            />
+            <a href={TEL_HREF}
+              class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-7 py-3.5 rounded-full transition-colors text-base">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              {TEL_DISPLAY}
+            </a>
+          </div>
+          <p class="text-xs text-white/45 mt-4">Kayıtlar başladı · Kontenjan sınırlı · Aysev Villaları, İsabey Ortaokulu Güneyi</p>
+        </div>
+
+        <!-- Afiş -->
+        <div class="reveal" style="transition-delay:120ms">
+          <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl bg-white/5">
+            <img src="/ortaokul-odev-kulubu.jpeg"
+              alt="KNT Akademi Ödev ve Çalışma Kulübü — 5-6-7-8. sınıflar için kayıtlar başladı"
+              width="1497" height="1054" loading="eager"
+              class="w-full h-auto block" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KONUM — İSABEY ORTAOKULU'NA YAKINLIK -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+
+      <div class="reveal max-w-2xl mb-12">
+        <SectionHeader
+          eyebrow="Konum"
+          title="İsabey Ortaokulu'na yürüme mesafesindeyiz"
+          sub="Okul çıkışında servis beklemek, trafiğe girmek, sizin işten çıkıp çocuğunuzu almanız yok. Zil çalıyor, çocuğunuz yürüyerek birkaç dakikada kurumda oluyor."
+        />
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-8 items-start">
+
+        <!-- Harita görseli -->
+        <div class="reveal lg:col-span-3">
+          <div class="rounded-3xl overflow-hidden border border-border shadow-sm bg-surface">
+            <img src="/knt-isabey-harita.png"
+              alt="Harita: İsabey Ortaokulu ve hemen güneyindeki KNT Akademi Özel Öğretim Kursu, Efeler / Aydın"
+              width="1920" height="1080" loading="lazy"
+              class="w-full h-auto block" />
+          </div>
+          <p class="text-xs text-muted mt-3">
+            Aysev Villaları, İsabey Ortaokulu Güneyi · Mimar Sinan Mah. 2427 Sok. No:30, Efeler / Aydın
+          </p>
+        </div>
+
+        <!-- Yakınlık bilgileri -->
+        <div class="reveal lg:col-span-2 flex flex-col gap-4" style="transition-delay:100ms">
+
+          <div class="rounded-2xl border-2 border-dashed border-accent/30 bg-accent/5 p-6">
+            <p class="text-4xl md:text-5xl font-black text-accent mb-2" style="letter-spacing:-0.02em">≈ 5 dk</p>
+            <p class="font-bold text-ink mb-1">Yürüme mesafesi</p>
+            <p class="text-sm text-muted leading-relaxed">
+              İsabey Ortaokulu'nun hemen güneyindeyiz. Okul çıkışıyla etüt başlangıcı arasında
+              kaybolan bir saat yok.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-4">
+            {[
+              { emoji: '🚸', baslik: 'Servis derdi yok',     desc: 'Çocuğunuz okuldan çıkıp doğrudan yürüyerek geliyor.' },
+              { emoji: '⏱️', baslik: 'Kayıp zaman yok',      desc: 'Yolda geçen süre yerine, o süre çalışmaya gidiyor.' },
+              { emoji: '🛡️', baslik: 'Güvenli güzergâh',    desc: 'Aynı mahalle içinde, kısa ve bilindik bir yol.' },
+            ].map(i => (
+              <div class="flex items-start gap-3.5">
+                <span class="text-xl shrink-0" aria-hidden="true">{i.emoji}</span>
+                <div>
+                  <p class="font-bold text-ink text-sm mb-0.5">{i.baslik}</p>
+                  <p class="text-sm text-muted leading-relaxed">{i.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href={MAPS_TARIF} target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2.5 bg-accent hover:bg-accent-hover text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150 text-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+              </svg>
+              Yol Tarifi Al
+            </a>
+            <a href={MAPS_KONUM} target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2.5 border border-accent text-accent hover:bg-accent-soft font-semibold px-6 py-3 rounded-full transition-colors duration-150 text-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              Haritada Gör
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ÖĞLE YEMEĞİ -->
+  <section class="py-20 md:py-28 bg-surface border-y border-border">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+        <div class="reveal">
+          <SectionHeader
+            eyebrow="Beslenme"
+            title="Öğle yemeği hizmetimiz var"
+            sub="Çalışan veliler için en büyük sorun, çocuğun öğle öğününü kimin vereceği. Bu yükü biz alıyoruz: çocuğunuz öğle yemeğini kurumda, düzenli ve hijyenik bir şekilde yiyor."
+          />
+
+          <ul class="mt-8 flex flex-col gap-3">
+            {[
+              'Öğle yemeği kurumda, düzenli saatte servis edilir',
+              'Sabahçı grup okul çıkışında, öğleci grup okula gitmeden önce yer',
+              'Ayrıca ikindi öğünü de kulüp programına dahildir',
+              'Çocuğunuz aç kalmaz, yolda atıştırmalıkla oyalanmaz',
+            ].map(t => (
+              <li class="flex items-start gap-3 bg-white rounded-xl border border-border px-5 py-4">
+                <span class="w-6 h-6 rounded-full bg-accent-soft text-accent flex items-center justify-center shrink-0 mt-0.5" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span class="text-sm text-ink leading-relaxed font-medium">{t}</span>
+              </li>
+            ))}
+          </ul>
+
+          <p class="text-xs text-muted mt-5">
+            Yemek hizmetinin kapsamı ve detayları için WhatsApp'tan bize yazabilirsiniz.
+          </p>
+        </div>
+
+        <div class="reveal grid grid-cols-2 gap-4" style="transition-delay:100ms">
+          <div class="col-span-2 rounded-3xl bg-ink text-white p-8 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+              style="background: radial-gradient(ellipse at 100% 0%, rgba(251,191,36,0.18) 0%, transparent 60%);"></div>
+            <div class="relative">
+              <span class="text-4xl block mb-4" aria-hidden="true">🍽️</span>
+              <p class="text-2xl md:text-3xl font-black leading-tight mb-3" style="letter-spacing:-0.02em">
+                Öğle yemeği<br />+ ikindi öğünü
+              </p>
+              <p class="text-sm text-white/60 leading-relaxed">
+                Çocuğunuzun gün içindeki iki öğünü de bizde. Siz işinizdeyken aklınız arkada kalmasın.
+              </p>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="text-3xl font-black text-accent mb-2" style="letter-spacing:-0.02em">5</p>
+            <p class="font-bold text-ink text-sm mb-1">Gün / Hafta</p>
+            <p class="text-xs text-muted leading-relaxed">Hafta içi her gün açığız</p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="text-3xl font-black text-accent mb-2" style="letter-spacing:-0.02em">2</p>
+            <p class="font-bold text-ink text-sm mb-1">Öğün</p>
+            <p class="text-xs text-muted leading-relaxed">Öğle yemeği ve ikindi öğünü</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KULÜPTE NE OLUYOR -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+
+      <div class="reveal max-w-2xl mb-12">
+        <SectionHeader
+          eyebrow="Kulüpte Ne Yapıyoruz?"
+          title="Ödev eve gitmez, kurumda biter"
+          sub="Ödev ve Çalışma Kulübü bir etüt salonundan fazlası: öğrencinin o gün okulda işlediği konuyu pekiştirdiği, ödevini doğru yöntemle bitirdiği ve takıldığı yerde anında destek aldığı bir düzen."
+        />
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-3 mb-12">
+        {dersler.map(d => (
+          <div class="reveal flex items-center gap-3 bg-surface rounded-xl border border-border px-4 py-4">
+            <span class={`w-9 h-9 rounded-lg ${d.renk} text-white flex items-center justify-center text-base shrink-0`} aria-hidden="true">{d.emoji}</span>
+            <span class="font-bold text-ink text-sm">{d.ad}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {kulupte.map(k => (
+          <div class="reveal flex flex-col gap-2.5 bg-white rounded-2xl border border-border p-6">
+            <span class="w-9 h-9 rounded-full bg-accent-soft text-accent flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+            <p class="font-bold text-ink">{k.baslik}</p>
+            <p class="text-sm text-muted leading-relaxed">{k.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SAATLER -->
+  <section class="py-20 md:py-28 bg-surface border-y border-border">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+
+      <div class="reveal max-w-2xl mb-12">
+        <SectionHeader
+          eyebrow="Saatler"
+          title="Okulunuz sabah da olsa, öğleden sonra da"
+          sub="İki ayrı grupla çalışıyoruz. Çocuğunuzun okul saati hangisiyse, ona uygun gruba yazılıyor."
+        />
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {gruplar.map(g => (
+          <div class="reveal rounded-3xl border border-border bg-white p-8">
+            <span class="text-3xl block mb-4" aria-hidden="true">{g.emoji}</span>
+            <p class="text-xs font-bold tracking-widest text-accent uppercase mb-2">{g.okul}</p>
+            <h3 class="text-2xl font-bold text-ink mb-3">{g.ad}</h3>
+            <p class="text-3xl md:text-4xl font-black text-ink mb-4" style="letter-spacing:-0.02em">{g.saat}</p>
+            <p class="text-sm text-muted leading-relaxed">{g.detay}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-sm text-muted mt-6">
+        Hafta içi her gün. Saat aralıkları grup doluluğuna göre güncellenebilir — kesin bilgi için bize ulaşın.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- 8. SINIFLAR -->
+  <section class="py-20 md:py-24">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="reveal rounded-3xl bg-ink text-white p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+          style="background: radial-gradient(ellipse at 90% 10%, rgba(155,0,48,0.32) 0%, transparent 60%);"></div>
+        <div class="relative grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="text-xs font-bold tracking-widest text-accent uppercase mb-4 block">8. Sınıflar İçin</span>
+            <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-4" style="letter-spacing:-0.02em">
+              8. sınıfta ödev kulübü değil,<br /><span class="text-accent">Özel Ders Kulübü</span>
+            </h2>
+            <p class="text-base text-white/65 leading-relaxed">
+              LGS yılında genel etüt yetmez. 8. sınıf öğrencilerimiz için yalnızca
+              <strong class="text-white">birebir Özel Ders Kulübü</strong> programımız vardır: öğrencinin
+              eksiği neyse ona göre kurulan, kişiye özel bir çalışma düzeni.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-start">
+            <WhatsAppButton ctx="ortaokul-8" label="8. Sınıf İçin Bilgi Al" class="text-base px-7 py-3.5" />
+            <a href="/paketler/ozel-ders-basari-kulubu"
+              class="inline-flex items-center justify-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-7 py-3.5 rounded-full transition-colors text-base">
+              Özel Ders Kulübü'nü İncele
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- VELİ GÜVENCELERİ -->
+  <section class="py-20 md:py-24 bg-surface border-y border-border">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+      <div class="reveal max-w-3xl mb-12">
+        <SectionHeader
+          eyebrow="Neden KNT Akademi?"
+          title="Çocuğunuzu emanet ederken içiniz rahat olsun"
+          sub="Aydın'da yılların kurumu; tüm izinleri tam, kadrosu onaylı, ortaokul öğrencisine ayrı bir düzen kuran bir akademi."
+        />
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        {guvenceler.map(g => (
+          <div class="reveal flex items-start gap-4 bg-white rounded-2xl border border-border p-6">
+            <span class="w-9 h-9 rounded-full bg-accent-soft text-accent flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9,12 11,14 15,10"/>
+              </svg>
+            </span>
+            <div>
+              <p class="font-bold text-ink mb-1">{g.baslik}</p>
+              <p class="text-sm text-muted leading-relaxed">{g.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KAPANIŞ CTA -->
+  <section class="bg-ink text-white py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 100%, rgba(155,0,48,0.28) 0%, transparent 60%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8 text-center flex flex-col items-center gap-6">
+      <span class="text-xs font-bold tracking-widest text-accent uppercase">Kayıtlar Başladı · Kontenjan Sınırlı</span>
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight" style="letter-spacing:-0.03em">
+        Okul çıkışından sonra<br />Ödev Kulübü seni bekliyor.
+      </h2>
+      <p class="text-base md:text-lg text-white/60 leading-relaxed max-w-xl">
+        İsabey Ortaokulu'nun hemen güneyinde, öğle yemeği hizmetiyle birlikte.
+        Kayıt ve bilgi için WhatsApp'tan yazın ya da telefonla ulaşın.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center gap-3 mt-2">
+        <WhatsAppButton ctx="ortaokul" label="WhatsApp'tan Kayıt Ol" class="text-base px-8 py-4" />
+        <a href={TEL_HREF}
+          class="inline-flex items-center gap-2.5 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white font-semibold px-8 py-4 rounded-full transition-colors text-base">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          {TEL_DISPLAY}
+        </a>
+      </div>
+      <p class="text-xs text-white/40 mt-2">Aysev Villaları, İsabey Ortaokulu Güneyi · Efeler / Aydın</p>
+    </div>
+  </section>
+
+</Base>

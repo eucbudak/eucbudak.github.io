@@ -17,6 +17,7 @@ const waUrl = wa('general');
     <nav class="hidden xl:flex items-center gap-5" aria-label="Ana menü">
 
       <a href="https://www.qdeneme.com" target="_blank" rel="noopener noreferrer" class="neon-cta">Q Deneme</a>
+      <a href="/q-atak" class="neon-cta-atak">Q ATAK</a>
 
       <!-- Eğitim Çözümlerimiz dropdown -->
       <div class="relative group">
@@ -29,6 +30,13 @@ const waUrl = wa('general');
         <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150 translate-y-1 group-hover:translate-y-0">
           <div class="bg-white rounded-2xl border border-border shadow-lg overflow-hidden">
           <div class="p-2 flex flex-col gap-1">
+            <a href="/ortaokul/" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
+              <span class="text-lg" aria-hidden="true">✏️</span>
+              <div>
+                <p class="text-sm font-semibold text-ink">Ödev ve Çalışma Kulübü <span class="text-[10px] font-bold text-accent align-middle">YENİ</span></p>
+                <p class="text-xs text-muted">5-6-7. sınıf · Öğle yemeği dahil · Efeler</p>
+              </div>
+            </a>
             <a href="/lgs-master" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface transition-colors duration-100">
               <span class="text-lg" aria-hidden="true">🎓</span>
               <div>
@@ -114,6 +122,7 @@ const waUrl = wa('general');
         </svg>
       </button>
       <div id="mobile-solutions-panel" class="hidden flex-col gap-1 pl-4 pb-2 border-b border-border">
+        <a href="/ortaokul/"                          class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">✏️ Ödev ve Çalışma Kulübü <span class="text-[10px] font-bold text-accent">YENİ</span></a>
         <a href="/lgs-master"                        class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">🎓 LGS Master <span class="text-[10px] font-bold text-accent">ÜCRETSİZ</span></a>
         <a href="/paketler/q-vip"                    class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">⭐ Q VIP</a>
         <a href="/paketler/ozel-ders-basari-kulubu"  class="flex items-center gap-3 py-2.5 text-sm font-medium text-ink hover:text-accent transition-colors">🎯 Özel Ders Başarı Kulübü</a>
@@ -126,6 +135,7 @@ const waUrl = wa('general');
       <a href="/subelerimiz"   class="text-sm font-medium text-ink py-3 border-b border-border">Şubelerimiz</a>
       <a href="/duyurular"     class="text-sm font-medium text-ink py-3 border-b border-border">Duyurular</a>
       <a href="https://www.qdeneme.com" target="_blank" rel="noopener noreferrer" class="neon-cta my-2 inline-block text-center w-full text-center">Q Deneme</a>
+      <a href="/q-atak" class="neon-cta-atak my-2 inline-block text-center w-full text-center">Q ATAK</a>
       <a href="/yaklasim"      class="text-sm font-medium text-ink py-3 border-b border-border">FOCUS Modeli</a>
       <a href="/iletisim"      class="text-sm font-medium text-ink py-3 border-b border-border">İletişim</a>
       <a href={waUrl} target="_blank" rel="noopener noreferrer"
