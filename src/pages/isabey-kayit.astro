@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+
+// ——— DÜZENLENEBİLİR ———
+// Google Apps Script web uygulaması URL'si (apps-script/isabey-kayit.gs kurulumuna bakın).
+const ENDPOINT = '';
+const LIMIT = 20;
+
+const gunler = [
+  { key: '2026-09-28', gun: '28 Eylül', hafta: 'Pazartesi' },
+  { key: '2026-09-29', gun: '29 Eylül', hafta: 'Salı' },
+  { key: '2026-09-30', gun: '30 Eylül', hafta: 'Çarşamba' },
+  { key: '2026-10-01', gun: '1 Ekim',   hafta: 'Perşembe' },
+  { key: '2026-10-02', gun: '2 Ekim',   hafta: 'Cuma' },
+];
+
+const TEL_DISPLAY = '0532 131 44 09';
+const TEL_HREF = 'tel:+905321314409';
+---
+
+<Base
+  title="İsabey Ortaokulu'na Özel Ücretsiz Öğle Yemeği ve Ödev Kulübü | KNT Akademi"
+  description="İsabey Ortaokulu 5-6-7. sınıf öğrencilerine özel, 28 Eylül – 2 Ekim arasında ücretsiz öğle yemeği ve ödev kulübü. Her gün 20 öğrenciyle sınırlı, hemen yerinizi ayırtın."
+  image="/ortaokul-odev-kulubu.jpeg"
+>
+  <section class="pt-32 md:pt-40 pb-12 bg-ink text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 15% 0%, rgba(155,0,48,0.30) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(251,191,36,0.12) 0%, transparent 50%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8">
+      <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        İsabey Ortaokulu'na özel · Ücretsiz
+      </span>
+      <h1 class="text-4xl md:text-6xl font-black leading-tight mb-5" style="letter-spacing:-0.03em">
+        Öğle Yemeği ve<br /><span class="text-accent">Ödev Kulübü Günleri</span>
+      </h1>
+      <p class="text-lg text-white/75 leading-relaxed max-w-xl">
+        28 Eylül – 2 Ekim arasında 5, 6 ve 7. sınıf öğrencilerimizi ücretsiz öğle yemeği ve
+        öğretmen eşliğinde ödev çalışmasına davet ediyoruz. Her gün en fazla
+        <strong class="text-white">{LIMIT} öğrenci</strong> kabul edilir.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-6 md:px-8">
+      <form id="kayit-form" class="bg-surface border border-border rounded-2xl p-6 md:p-8 flex flex-col gap-6" novalidate>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <label class="flex flex-col gap-2">
+            <span class="text-sm font-semibold">Öğrenci adı soyadı</span>
+            <input name="ogrenci" required minlength="3" maxlength="80" autocomplete="off"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="flex flex-col gap-2">
+            <span class="text-sm font-semibold">Veli adı soyadı</span>
+            <input name="veli" required minlength="3" maxlength="80" autocomplete="name"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="flex flex-col gap-2 sm:col-span-2">
+            <span class="text-sm font-semibold">Veli telefonu</span>
+            <input name="telefon" type="tel" inputmode="tel" required maxlength="20" autocomplete="tel"
+              placeholder="05XX XXX XX XX"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+        </div>
+
+        <fieldset>
+          <legend class="text-sm font-semibold mb-3">Sınıfı</legend>
+          <div class="grid grid-cols-3 gap-3">
+            {['5', '6', '7'].map((s) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="sinif" value={s} required class="peer sr-only" />
+                <span class="block text-center rounded-xl border border-border bg-white py-3 font-bold peer-checked:bg-accent peer-checked:text-white peer-checked:border-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent transition-colors">
+                  {s}. sınıf
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="text-sm font-semibold mb-3">Hangi gün gelmeyi tercih edersiniz?</legend>
+          <div class="grid sm:grid-cols-5 gap-3">
+            {gunler.map((g) => (
+              <label class="cursor-pointer" data-gun={g.key}>
+                <input type="radio" name="gun" value={g.key} required class="peer sr-only" />
+                <span class="flex sm:flex-col items-center justify-between sm:justify-center gap-1 rounded-xl border border-border bg-white px-4 py-3 sm:text-center peer-checked:bg-accent peer-checked:text-white peer-checked:border-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent peer-disabled:opacity-40 peer-disabled:cursor-not-allowed peer-disabled:line-through transition-colors">
+                  <span>
+                    <span class="block font-bold">{g.gun}</span>
+                    <span class="block text-xs opacity-70">{g.hafta}</span>
+                  </span>
+                  <span class="kontenjan text-xs font-semibold opacity-80">&nbsp;</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <p id="form-hata" class="hidden text-sm font-semibold text-accent" role="alert"></p>
+
+        <button type="submit"
+          class="bg-accent hover:bg-accent-hover text-white font-bold rounded-xl px-6 py-4 transition-colors disabled:opacity-60 disabled:cursor-wait">
+          Kaydı Tamamla
+        </button>
+        <p class="text-xs text-muted leading-relaxed">
+          Bilgileriniz yalnızca bu etkinliğin planlaması için kullanılır. Sorularınız için
+          <a href={TEL_HREF} class="font-semibold text-ink hover:text-accent">{TEL_DISPLAY}</a>.
+        </p>
+      </form>
+
+      <div id="kayit-tamam" class="hidden bg-surface border border-border rounded-2xl p-8 text-center" role="status">
+        <p class="text-4xl mb-4">🎉</p>
+        <h2 class="text-2xl font-black mb-2">Kaydınız alındı!</h2>
+        <p class="text-muted"><span id="tamam-ogrenci" class="font-semibold text-ink"></span> için
+          <span id="tamam-gun" class="font-semibold text-ink"></span> günü yeriniz ayrıldı.</p>
+        <button id="yeni-kayit" type="button" class="mt-6 text-sm font-semibold text-accent hover:text-accent-hover">
+          Başka bir öğrenci kaydet →
+        </button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ ENDPOINT, LIMIT }}>
+  const form = document.getElementById('kayit-form');
+  const hata = document.getElementById('form-hata');
+  const tamam = document.getElementById('kayit-tamam');
+  const btn = form.querySelector('button[type=submit]');
+
+  function showError(msg) {
+    hata.textContent = msg;
+    hata.classList.remove('hidden');
+  }
+
+  function applyCounts(counts) {
+    document.querySelectorAll('[data-gun]').forEach((el) => {
+      const n = counts[el.dataset.gun] ?? 0;
+      const kalan = Math.max(0, LIMIT - n);
+      const input = el.querySelector('input');
+      el.querySelector('.kontenjan').textContent = kalan === 0 ? 'Dolu' : `${kalan} yer kaldı`;
+      input.disabled = kalan === 0;
+      if (input.disabled) input.checked = false;
+    });
+  }
+
+  async function loadCounts() {
+    if (!ENDPOINT) return;
+    try {
+      const res = await fetch(ENDPOINT);
+      const data = await res.json();
+      if (data.ok) applyCounts(data.counts);
+    } catch {
+      // Doluluk bilgisi gelmezse form yine çalışır; sınır sunucuda uygulanır.
+    }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hata.classList.add('hidden');
+    const fd = new FormData(form);
+    const payload = {
+      ogrenci: String(fd.get('ogrenci') || '').trim(),
+      veli: String(fd.get('veli') || '').trim(),
+      telefon: String(fd.get('telefon') || '').trim(),
+      sinif: fd.get('sinif'),
+      gun: fd.get('gun'),
+    };
+    const tel = payload.telefon.replace(/\D/g, '').replace(/^(90|0)(?=5\d{9}$)/, '');
+    if (payload.ogrenci.length < 3) return showError('Öğrencinin adını ve soyadını yazın.');
+    if (payload.veli.length < 3) return showError('Velinin adını ve soyadını yazın.');
+    if (!/^5\d{9}$/.test(tel)) return showError('Geçerli bir cep telefonu numarası girin (05XX XXX XX XX).');
+    if (!payload.sinif) return showError('Öğrencinin sınıfını seçin.');
+    if (!payload.gun) return showError('Gelmek istediğiniz günü seçin.');
+    if (!ENDPOINT) return showError('Kayıt sistemi henüz aktif değil. Lütfen bizi arayın.');
+
+    btn.disabled = true;
+    btn.textContent = 'Gönderiliyor…';
+    try {
+      // text/plain: Apps Script CORS ön kontrolüne (preflight) takılmamak için.
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.counts) applyCounts(data.counts);
+      if (!data.ok) return showError(data.error || 'Kayıt yapılamadı, lütfen tekrar deneyin.');
+
+      const secili = form.querySelector(`[data-gun="${payload.gun}"]`);
+      document.getElementById('tamam-ogrenci').textContent = payload.ogrenci;
+      document.getElementById('tamam-gun').textContent =
+        secili.querySelector('.font-bold').textContent + ' ' + secili.querySelector('.text-xs').textContent;
+      form.classList.add('hidden');
+      tamam.classList.remove('hidden');
+      tamam.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch {
+      showError('Bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Kaydı Tamamla';
+    }
+  });
+
+  document.getElementById('yeni-kayit').addEventListener('click', () => {
+    form.reset();
+    tamam.classList.add('hidden');
+    form.classList.remove('hidden');
+    loadCounts();
+  });
+
+  loadCounts();
+</script>
