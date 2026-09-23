@@ -25,7 +25,9 @@ const GUN_ETIKET = {
 };
 const GUNLER = Object.keys(GUN_ETIKET);
 const SINIFLAR = ['5', '6', '7'];
-const HEADERS = ['Kayıt Zamanı', 'Gün', 'Öğrenci Adı Soyadı', 'Sınıf', 'Veli Adı Soyadı', 'Veli Telefonu'];
+const HEADERS = ['Kayıt Zamanı', 'Gün', 'Öğrenci Adı Soyadı', 'Sınıf', 'Veli Adı Soyadı', 'Veli Telefonu', 'KVKK Açık Rıza'];
+// Aydınlatma/rıza metni değişirse sürümü artırın; hangi metne onay verildiği kayıtta durur.
+const KVKK_SURUM = 'v1 (23.09.2026)';
 
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -34,6 +36,12 @@ function sheet_() {
     sh = ss.insertSheet(SHEET_NAME);
     sh.appendRow(HEADERS);
     sh.setFrozenRows(1);
+    return sh;
+  }
+  // Başlık satırı eski sürümden kalmışsa tamamla.
+  const basliklar = sh.getRange(1, 1, 1, HEADERS.length).getDisplayValues()[0];
+  if (basliklar.join('|') !== HEADERS.join('|')) {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
   return sh;
 }
@@ -85,6 +93,7 @@ function doPost(e) {
   if (SINIFLAR.indexOf(sinif) === -1) return json_({ ok: false, error: 'Geçerli bir sınıf seçin.' });
   if (GUNLER.indexOf(gun) === -1) return json_({ ok: false, error: 'Geçerli bir gün seçin.' });
   if (!/^5\d{9}$/.test(telefon)) return json_({ ok: false, error: 'Geçerli bir cep telefonu numarası girin (05XX XXX XX XX).' });
+  if (data.kvkk !== true) return json_({ ok: false, error: 'Kayıt için KVKK aydınlatma metnini onaylamanız gerekir.' });
 
   // Aynı anda gelen kayıtların 20 sınırını aşmaması için kilit.
   const lock = LockService.getScriptLock();
@@ -97,7 +106,7 @@ function doPost(e) {
     }
     // Formül enjeksiyonunu önlemek için baştaki = + - @ karakterlerini etkisizleştir.
     const safe = function (s) { return /^[=+\-@]/.test(s) ? "'" + s : s; };
-    sh.appendRow([new Date(), GUN_ETIKET[gun], safe(ogrenci), sinif, safe(veli), "'0" + telefon]);
+    sh.appendRow([new Date(), GUN_ETIKET[gun], safe(ogrenci), sinif, safe(veli), "'0" + telefon, 'Onaylandı — ' + KVKK_SURUM]);
     c[gun]++;
     return json_({ ok: true, counts: c });
   } finally {

@@ -97,6 +97,59 @@ const TEL_HREF = 'tel:+905321314409';
           </div>
         </fieldset>
 
+        <div class="border-t border-border pt-6">
+          <details class="mb-4 rounded-xl border border-border bg-white p-4">
+            <summary class="cursor-pointer text-sm font-semibold">
+              KVKK Aydınlatma Metni ve Açık Rıza Beyanı <span class="text-muted font-normal">(okumak için tıklayın)</span>
+            </summary>
+            <div class="mt-4 flex flex-col gap-3 text-sm text-muted leading-relaxed">
+              <p>
+                <strong class="text-ink">Veri sorumlusu:</strong> KNT Akademi Özel Öğretim Kursu,
+                Mimar Sinan Mahallesi 2427 Sokak No:30, Efeler / Aydın — {TEL_DISPLAY}.
+              </p>
+              <p>
+                <strong class="text-ink">İşlenen veriler:</strong> Öğrencinin adı soyadı ve sınıfı;
+                velinin adı soyadı ve cep telefonu numarası; seçilen katılım günü ve kayıt zamanı.
+              </p>
+              <p>
+                <strong class="text-ink">İşleme amacı:</strong> 28 Eylül – 2 Ekim 2026 tarihlerindeki ücretsiz
+                öğle yemeği ve ödev kulübü etkinliğine katılım kaydının oluşturulması, günlük 20 kişilik
+                kontenjanın takibi, katılım ve yemek planlaması ile bu etkinliğe ilişkin olarak veliyle
+                iletişim kurulması.
+              </p>
+              <p>
+                <strong class="text-ink">Hukuki sebep ve aktarım:</strong> Veriler, 6698 sayılı Kanun'un 5/1
+                maddesi uyarınca <strong class="text-ink">açık rızanıza</strong> dayanarak işlenir. Kayıtlar,
+                elektronik ortamda Google LLC'nin sunucularında (Google E-Tablolar) saklanır; bunun dışında
+                üçüncü kişilerle paylaşılmaz, yurt dışına başka bir aktarım yapılmaz, pazarlama amacıyla
+                kullanılmaz.
+              </p>
+              <p>
+                <strong class="text-ink">Saklama süresi:</strong> Etkinliğin bitiminden itibaren en geç
+                3 ay içinde silinir.
+              </p>
+              <p>
+                <strong class="text-ink">Haklarınız:</strong> Kanun'un 11. maddesi kapsamında verilerinize
+                erişme, düzeltilmesini veya silinmesini isteme ve rızanızı dilediğiniz zaman geri alma
+                hakkına sahipsiniz. Talepleriniz için {TEL_DISPLAY} numarasından bize ulaşabilirsiniz.
+              </p>
+              <p>
+                Öğrenci 18 yaşından küçük olduğundan bu onay, velisi/yasal temsilcisi tarafından verilir.
+              </p>
+            </div>
+          </details>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="kvkk" required
+              class="mt-1 w-5 h-5 shrink-0 accent-accent cursor-pointer" />
+            <span class="text-sm leading-relaxed">
+              Yukarıdaki aydınlatma metnini okudum. Öğrencinin ve kendime ait kişisel verilerin
+              bu etkinlik kapsamında işlenmesine veli/yasal temsilci sıfatıyla
+              <strong>açık rıza veriyorum.</strong>
+            </span>
+          </label>
+        </div>
+
         <p id="form-hata" class="hidden text-sm font-semibold text-accent" role="alert"></p>
 
         <button type="submit"
@@ -165,6 +218,7 @@ const TEL_HREF = 'tel:+905321314409';
       telefon: String(fd.get('telefon') || '').trim(),
       sinif: fd.get('sinif'),
       gun: fd.get('gun'),
+      kvkk: fd.get('kvkk') === 'on',
     };
     const tel = payload.telefon.replace(/\D/g, '').replace(/^(90|0)(?=5\d{9}$)/, '');
     if (payload.ogrenci.length < 3) return showError('Öğrencinin adını ve soyadını yazın.');
@@ -172,6 +226,7 @@ const TEL_HREF = 'tel:+905321314409';
     if (!/^5\d{9}$/.test(tel)) return showError('Geçerli bir cep telefonu numarası girin (05XX XXX XX XX).');
     if (!payload.sinif) return showError('Öğrencinin sınıfını seçin.');
     if (!payload.gun) return showError('Gelmek istediğiniz günü seçin.');
+    if (!payload.kvkk) return showError('Kayıt için KVKK aydınlatma metnini onaylamanız gerekir.');
     if (!ENDPOINT) return showError('Kayıt sistemi henüz aktif değil. Lütfen bizi arayın.');
 
     btn.disabled = true;
