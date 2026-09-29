@@ -5,6 +5,8 @@ import Base from '../layouts/Base.astro';
 // Google Apps Script web uygulaması URL'si (apps-script/isabey-kayit.gs kurulumuna bakın).
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwQYYeEeSijqBhlWHQVI5MIZK4yCTORJ4VS2CrXHq597ENR0r19x_9JZLXm3frpjfp6WQ/exec';
 const LIMIT = 20;
+// false iken form gizlenir, "kayıtlar kapandı" mesajı gösterilir.
+const KAYIT_ACIK = false;
 
 const gunler = [
   { key: '2026-09-28', gun: '28 Eylül', hafta: 'Pazartesi' },
@@ -45,6 +47,14 @@ const TEL_HREF = 'tel:+905321314409';
 
   <section class="py-12 md:py-16">
     <div class="max-w-3xl mx-auto px-6 md:px-8">
+      {!KAYIT_ACIK && (
+        <div class="bg-surface border border-border rounded-2xl p-8 text-center" role="status">
+          <h2 class="text-2xl font-black mb-2">Kayıtlar kapandı</h2>
+          <p class="text-muted">İlginiz için teşekkür ederiz. Sorularınız için
+            <a href={TEL_HREF} class="font-semibold text-ink hover:text-accent">{TEL_DISPLAY}</a>.</p>
+        </div>
+      )}
+      {KAYIT_ACIK && (<>
       <form id="kayit-form" class="bg-surface border border-border rounded-2xl p-6 md:p-8 flex flex-col gap-6" novalidate>
         <div class="grid sm:grid-cols-2 gap-5">
           <label class="flex flex-col gap-2">
@@ -171,10 +181,12 @@ const TEL_HREF = 'tel:+905321314409';
           Başka bir öğrenci kaydet →
         </button>
       </div>
+      </>)}
     </div>
   </section>
 </Base>
 
+{KAYIT_ACIK && (
 <script define:vars={{ ENDPOINT, LIMIT }}>
   const form = document.getElementById('kayit-form');
   const hata = document.getElementById('form-hata');
@@ -266,3 +278,4 @@ const TEL_HREF = 'tel:+905321314409';
 
   loadCounts();
 </script>
+)}

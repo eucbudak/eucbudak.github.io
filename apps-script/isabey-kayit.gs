@@ -15,6 +15,8 @@
 
 const SHEET_NAME = 'Kayıtlar';
 const LIMIT = 20;
+// false iken yeni kayıt kabul edilmez.
+const KAYIT_ACIK = false;
 // Anahtar formdan gelir; tabloya okunur etiket yazılır.
 const GUN_ETIKET = {
   '2026-09-28': '28 Eylül Pazartesi',
@@ -75,6 +77,7 @@ function doGet() {
 }
 
 function doPost(e) {
+  if (!KAYIT_ACIK) return json_({ ok: false, error: 'Kayıtlar kapanmıştır.' });
   let data;
   try {
     data = JSON.parse(e.postData.contents);
