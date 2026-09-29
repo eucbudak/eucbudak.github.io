@@ -1,0 +1,228 @@
+---
+import Base from '../layouts/Base.astro';
+
+// ——— DÜZENLENEBİLİR ———
+// Google Apps Script web uygulaması URL'si (apps-script/nazilli-deneme.gs kurulumuna bakın).
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxfX4_-TKDwV1cbSXDOlLL3h3XK41bg19EDm3tcCFusfCVp7alK7T6Jju1p4oR7JzUodQ/exec';
+
+const TEL_DISPLAY = '0544 141 09 09';
+const TEL_HREF = 'tel:+905441410909';
+const ADRES = 'Zafer Mah. 959 Sok. No:11/B, Nazilli / Aydın (Mastavra Pide Kavşağı batı yönü)';
+---
+
+<Base
+  title="5, 6 ve 7. Sınıflar İçin Ücretsiz Deneme Sınavı — Nazilli | KNT Akademi"
+  description="KNT Akademi Nazilli'de 18 Ekim 2026 Pazar günü 5, 6 ve 7. sınıflara ücretsiz deneme sınavı, ardından ücretsiz analiz ve koçluk desteği. Hemen başvurun."
+  image="/nazilli-deneme-sinavi.jpeg"
+>
+  <section class="pt-32 md:pt-40 pb-12 bg-ink text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 15% 0%, rgba(155,0,48,0.30) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(251,191,36,0.12) 0%, transparent 50%);">
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 md:px-8">
+      <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-accent uppercase mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        KNT Akademi Nazilli · Ücretsiz
+      </span>
+      <h1 class="text-4xl md:text-6xl font-black leading-tight mb-5" style="letter-spacing:-0.03em">
+        5, 6 ve 7. Sınıflar İçin<br /><span class="text-accent">Ücretsiz Deneme Sınavı</span>
+      </h1>
+      <p class="text-lg text-white/75 leading-relaxed max-w-xl">
+        Gerçek sınav deneyimiyle kendini ölç; sınav sonrası detaylı analiz ve kişiye özel
+        koçluk desteği de ücretsiz.
+      </p>
+      <dl class="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
+        <div class="rounded-xl bg-white/10 px-4 py-3">
+          <dt class="text-white/60">Tarih</dt>
+          <dd class="font-bold text-base">18 Ekim 2026 Pazar</dd>
+        </div>
+        <div class="rounded-xl bg-white/10 px-4 py-3">
+          <dt class="text-white/60">Sınav giriş saatleri</dt>
+          <dd class="font-bold text-base">10:00 · 15:00</dd>
+        </div>
+        <div class="rounded-xl bg-white/10 px-4 py-3">
+          <dt class="text-white/60">Yer</dt>
+          <dd class="font-bold text-base">KNT Akademi Nazilli</dd>
+        </div>
+      </dl>
+      <p class="mt-4 text-sm text-white/60">{ADRES}</p>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-6 md:px-8">
+      <h2 class="text-2xl font-black mb-6">Başvuru formu</h2>
+      <form id="basvuru-form" class="bg-surface border border-border rounded-2xl p-6 md:p-8 flex flex-col gap-6" novalidate>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <label class="flex flex-col gap-2">
+            <span class="text-sm font-semibold">Öğrenci adı soyadı</span>
+            <input name="ogrenci" required minlength="3" maxlength="80" autocomplete="off"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="flex flex-col gap-2">
+            <span class="text-sm font-semibold">Okulu</span>
+            <input name="okul" required minlength="2" maxlength="80" autocomplete="off"
+              placeholder="Örn. Nazilli Ortaokulu"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="flex flex-col gap-2 sm:col-span-2">
+            <span class="text-sm font-semibold">Veli telefonu</span>
+            <input name="telefon" type="tel" inputmode="tel" required maxlength="20" autocomplete="tel"
+              placeholder="05XX XXX XX XX"
+              class="rounded-xl border border-border bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+        </div>
+
+        <fieldset>
+          <legend class="text-sm font-semibold mb-3">Sınıfı</legend>
+          <div class="grid grid-cols-3 gap-3">
+            {['5', '6', '7'].map((s) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="sinif" value={s} required class="peer sr-only" />
+                <span class="block text-center rounded-xl border border-border bg-white py-3 font-bold peer-checked:bg-accent peer-checked:text-white peer-checked:border-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent transition-colors">
+                  {s}. sınıf
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="border-t border-border pt-6">
+          <details class="mb-4 rounded-xl border border-border bg-white p-4">
+            <summary class="cursor-pointer text-sm font-semibold">
+              KVKK Aydınlatma Metni ve Açık Rıza Beyanı <span class="text-muted font-normal">(okumak için tıklayın)</span>
+            </summary>
+            <div class="mt-4 flex flex-col gap-3 text-sm text-muted leading-relaxed">
+              <p>
+                <strong class="text-ink">Veri sorumlusu:</strong> KNT Akademi Nazilli,
+                {ADRES} — {TEL_DISPLAY}.
+              </p>
+              <p>
+                <strong class="text-ink">İşlenen veriler:</strong> Öğrencinin adı soyadı, okulu ve sınıfı;
+                velinin cep telefonu numarası; başvuru zamanı.
+              </p>
+              <p>
+                <strong class="text-ink">İşleme amacı:</strong> 18 Ekim 2026 tarihli ücretsiz deneme sınavına
+                başvurunun alınması, sınav oturumlarının planlanması, sınav sonuçlarının analizi ve koçluk
+                desteği için veliyle iletişim kurulması.
+              </p>
+              <p>
+                <strong class="text-ink">Hukuki sebep ve aktarım:</strong> Veriler, 6698 sayılı Kanun'un 5/1
+                maddesi uyarınca <strong class="text-ink">açık rızanıza</strong> dayanarak işlenir. Kayıtlar,
+                elektronik ortamda Google LLC'nin sunucularında (Google E-Tablolar) saklanır; bunun dışında
+                üçüncü kişilerle paylaşılmaz, yurt dışına başka bir aktarım yapılmaz.
+              </p>
+              <p>
+                <strong class="text-ink">Saklama süresi:</strong> Sınav tarihinden itibaren en geç
+                6 ay içinde silinir.
+              </p>
+              <p>
+                <strong class="text-ink">Haklarınız:</strong> Kanun'un 11. maddesi kapsamında verilerinize
+                erişme, düzeltilmesini veya silinmesini isteme ve rızanızı dilediğiniz zaman geri alma
+                hakkına sahipsiniz. Talepleriniz için {TEL_DISPLAY} numarasından bize ulaşabilirsiniz.
+              </p>
+              <p>
+                Öğrenci 18 yaşından küçük olduğundan bu onay, velisi/yasal temsilcisi tarafından verilir.
+              </p>
+            </div>
+          </details>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="kvkk" required
+              class="mt-1 w-5 h-5 shrink-0 accent-accent cursor-pointer" />
+            <span class="text-sm leading-relaxed">
+              Yukarıdaki aydınlatma metnini okudum. Öğrencinin ve kendime ait kişisel verilerin
+              bu sınav kapsamında işlenmesine veli/yasal temsilci sıfatıyla
+              <strong>açık rıza veriyorum.</strong>
+            </span>
+          </label>
+        </div>
+
+        <p id="form-hata" class="hidden text-sm font-semibold text-accent" role="alert"></p>
+
+        <button type="submit"
+          class="bg-accent hover:bg-accent-hover text-white font-bold rounded-xl px-6 py-4 transition-colors disabled:opacity-60 disabled:cursor-wait">
+          Başvuruyu Gönder
+        </button>
+        <p class="text-xs text-muted leading-relaxed">
+          Sorularınız için
+          <a href={TEL_HREF} class="font-semibold text-ink hover:text-accent">{TEL_DISPLAY}</a>.
+        </p>
+      </form>
+
+      <div id="basvuru-tamam" class="hidden bg-surface border border-border rounded-2xl p-8 text-center" role="status">
+        <p class="text-4xl mb-4">🎉</p>
+        <h2 class="text-2xl font-black mb-2">Başvurunuz alındı!</h2>
+        <p class="text-muted"><span id="tamam-ogrenci" class="font-semibold text-ink"></span> için
+          18 Ekim 2026 Pazar deneme sınavı başvurusu kaydedildi. Sınav oturumu için sizi arayacağız.</p>
+        <button id="yeni-basvuru" type="button" class="mt-6 text-sm font-semibold text-accent hover:text-accent-hover">
+          Başka bir öğrenci için başvur →
+        </button>
+      </div>
+
+      <img src="/nazilli-deneme-sinavi.jpeg" alt="KNT Akademi Nazilli 5, 6 ve 7. sınıflar ücretsiz deneme sınavı afişi"
+        width="928" height="1152" loading="lazy"
+        class="mt-12 w-full max-w-md mx-auto rounded-2xl border border-border" />
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ ENDPOINT }}>
+  const form = document.getElementById('basvuru-form');
+  const hata = document.getElementById('form-hata');
+  const tamam = document.getElementById('basvuru-tamam');
+  const btn = form.querySelector('button[type=submit]');
+
+  function showError(msg) {
+    hata.textContent = msg;
+    hata.classList.remove('hidden');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hata.classList.add('hidden');
+    const fd = new FormData(form);
+    const payload = {
+      ogrenci: String(fd.get('ogrenci') || '').trim(),
+      okul: String(fd.get('okul') || '').trim(),
+      telefon: String(fd.get('telefon') || '').trim(),
+      sinif: fd.get('sinif'),
+      kvkk: fd.get('kvkk') === 'on',
+    };
+    const tel = payload.telefon.replace(/\D/g, '').replace(/^(90|0)(?=5\d{9}$)/, '');
+    if (payload.ogrenci.length < 3) return showError('Öğrencinin adını ve soyadını yazın.');
+    if (payload.okul.length < 2) return showError('Öğrencinin okulunu yazın.');
+    if (!payload.sinif) return showError('Öğrencinin sınıfını seçin.');
+    if (!/^5\d{9}$/.test(tel)) return showError('Geçerli bir cep telefonu numarası girin (05XX XXX XX XX).');
+    if (!payload.kvkk) return showError('Başvuru için KVKK aydınlatma metnini onaylamanız gerekir.');
+
+    btn.disabled = true;
+    btn.textContent = 'Gönderiliyor…';
+    try {
+      // text/plain: Apps Script CORS ön kontrolüne (preflight) takılmamak için.
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!data.ok) return showError(data.error || 'Başvuru gönderilemedi, lütfen tekrar deneyin.');
+
+      document.getElementById('tamam-ogrenci').textContent = payload.ogrenci;
+      form.classList.add('hidden');
+      tamam.classList.remove('hidden');
+      tamam.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch {
+      showError('Bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Başvuruyu Gönder';
+    }
+  });
+
+  document.getElementById('yeni-basvuru').addEventListener('click', () => {
+    form.reset();
+    tamam.classList.add('hidden');
+    form.classList.remove('hidden');
+  });
+</script>
